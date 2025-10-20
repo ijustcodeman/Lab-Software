@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"Alle Klassen und Schnittstellen","u":"allclasses-index.html","k":"18"},{"p":"hausaufgabe9","l":"Bibliothek"},{"p":"hausaufgabe9","l":"Buch"},{"p":"hausaufgabe9","l":"CD"},{"p":"hausaufgabe9","l":"ElektronischesMedium"},{"p":"hausaufgabe9","l":"Zeitschrift"}];updateSearchResults();

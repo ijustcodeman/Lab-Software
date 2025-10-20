@@ -1,0 +1,17 @@
+Werttypen:
+
+- int, double, boolean, char
+
+Verweistypen:
+
+- Integer, Double, Boolean
+
+
+Autoboxing:
+
+- Automatisches Umwandeln eines primitiven Datentyps in sein
+  entsprechendes Wrapper-Objekt
+
+Unboxing:
+
+- Automatisches Umwandeln eins Wrapper-Objekts zurück in einen primitiven Datentyp

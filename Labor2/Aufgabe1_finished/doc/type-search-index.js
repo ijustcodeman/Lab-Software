@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"Alle Klassen und Schnittstellen","u":"allclasses-index.html","k":"18"},{"p":"<Unnamed>","l":"Printable","k":"10"},{"p":"<Unnamed>","l":"TicketMachine"},{"p":"<Unnamed>","l":"TicketType","k":"9"},{"p":"<Unnamed>","l":"TicketUtils"},{"p":"<Unnamed>","l":"Zone","k":"9"}];updateSearchResults();

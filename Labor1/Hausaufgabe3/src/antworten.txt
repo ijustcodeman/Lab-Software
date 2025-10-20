@@ -1,0 +1,39 @@
+1. Beschreiben Sie den Lebenszyklus der Objekte, die in der Methode processSensorData() erstellt
+   werden.
+
+- dataChunk wird bei jedem Loop neu erstellt und nach dem Aufruf von analyzeAndStore(dataChunk)
+  nicht mehr verwendet
+
+- UUID Objekte sind in dataChunk erhalten und somit nur solange erreichbar wie dataChunk
+
+2. Welche Objekte werden bei jedem Durchlauf der inneren for-Schleife erstellt? Wann werden
+   diese Objekte für den Garbage Collector (GC) freigegeben?
+
+- bei jedem Durchlauf der inneren Schleife wird ein neuer UUID erstellt und dessen toString() Ergebnis in dataChunk eingefügt
+
+- obwohl new UUID(0L, j) ein UUID-Objekt erzeugt, wird nur dessen toString() Ergebnis verwendet und keine Referenz auf das
+  UUID-Objekt gespeichert
+
+- die UUID Objekte sind temporär und direkt nach dem Aufruf von toString() nicht mehr referenziert
+
+- die String Objekte verbleiben in dataChunk und sind damit bis zum Ende des äußeren Schleifendurchlaufs erreichbar
+
+- nach Beendigung des äußeren Schleifendurchlaufs ist dataChunk nicht mehr referenziert, und somit auch die enthaltenen
+  String-Objekte nicht mehr
+
+3. Wann werden die List<String>-Objekte (dataChunk) für den GC freigegeben?
+
+- dataChunk wird nach jedem Schleifendurchlauf für den GC freigegeben, wenn keine Referenz mehr besteht
+
+4. Erklären Sie, was System.gc() bewirkt. Ist dies in einer produktiven Anwendung empfehlenswert?
+   Begründen Sie Ihre Antwort.
+
+- System.gc() fordert die JVM auf eine Garbage Collection durchzuführen
+
+- Empfehlenswert?:
+
+- da es nur eine Anfrage ist, ist es keine Garantie, dass es die JVM durchführt
+
+- außerdem verwaltet die JVM sehr effizient Speicher selbst und der Aufruf von System.gc() würde Leistung kosten
+
+--> deswegen ist es in der Regel nicht empfehlenswert

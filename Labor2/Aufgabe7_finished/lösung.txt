@@ -1,0 +1,52 @@
+1.)
+
+Allgemein: UTF-8: 8 Bit (0-255)
+Bytes mit Bedeutung:
+
+68: D
+105: i
+101: e
+32: Leerzeichen
+87: W
+101: e
+108: l
+116: t
+32: Leerzeichen
+107: k
+111: o
+115: s
+116: t
+101: e
+116: t
+32: Leerzeichen
+49: 1
+55: 7
+32: Leerzeichen
+226: 0xE2
+130: 0x82
+172: 0xAC
+13: Carriage Return
+10: Line Feed
+
+--> (226 130 172 ergeben das € Zeichen, also U+20AC)
+--> (13 10 ergeben zusammen ein Zeilenumbruch)
+
+Weitere Erklärung zu 226 130 172:
+
+- U+20AC = 0010 0000 1010 1100 (16 Bit, 8364 Dezimal und Unicode Wert)
+- UTF-8 3 Byte Struktur: 1110xxxx 10xxxxxx 10xxxxxx (nötig für €, weil es liegt im Bereich U+0800 - U+FFF und UTF-8 mit Präfix System arbeitet)
+--> 11100010 10000010 10101100
+
+2.)
+
+Allgemein: UTF-16: 16 Bit 
+
+Was ändert sich?:
+
+- alle ASCII-Zeichen wie Buchstaben, Ziffern, Leerzeichen usw. werden zu 2 Bytes
+- das € Zeichen wird zu 2 Bytes (3 Bytes bei UTF-8)
+- der Sichtbare Text bleibt gleich
+- die Dateigröße wird größer bei ASCII-dominiertem Text
+
+
+
