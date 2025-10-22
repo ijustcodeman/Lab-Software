@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"Alle Klassen und Schnittstellen","u":"allclasses-index.html","k":"18"},{"p":"<Unnamed>","l":"Familie"},{"p":"<Unnamed>","l":"Familie.Familienmitglied","k":"9"},{"p":"<Unnamed>","l":"Program"}];updateSearchResults();

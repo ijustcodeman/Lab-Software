@@ -1,5 +1,13 @@
+/**
+ * Hauptklasse zum Testen verschiedenster Testfälle.
+ * @author Max Gebert, 21513
+ */
 public class Program {
 
+    /**
+     * Hauptmethode für das Instanziieren und ausgeben auf der Konsole.
+     * @param args Wird hier nicht genutzt
+     */
     public static void main(String[] args){
 
         Familie schmidt = new Familie("Robert Schmidt", "Andrea Schmidt");
