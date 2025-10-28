@@ -243,9 +243,15 @@ abstract class Medium {
          return null;
     }
 
-    public abstract void ausleihen();
+    public void ausleihen() {
 
-    public abstract void rueckgabe();
+    }
 
-    public abstract void verlaengern();
+    public void rueckgabe() {
+
+    }
+
+    public void verlaengern() {
+
+    }
 }
