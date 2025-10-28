@@ -23,9 +23,7 @@ public class CD extends Medium {
 
     private int altersfreigabe;
 
-    private boolean ausgeliehen;
-
-    private boolean verfuegbar;
+    private boolean status;
 
 
 
@@ -85,5 +83,30 @@ public class CD extends Medium {
         sb.append("Label: ").append(getLabel()).append("\n");
         sb.append("Kuenstler: ").append(getKuenstler()).append("\n");
         return sb.toString();
+    }
+
+    @Override
+    public void ausleihen() {
+        if (this.status){
+            this.status = false;
+        }
+        else{
+            System.out.println("Diese CD ist bereits ausgeliehen.");
+        }
+    }
+
+    @Override
+    public void rueckgabe() {
+        if (!this.status){
+            this.status = true;
+        }
+        else{
+            System.out.println("Du kannst eine CD die du nicht besitzt, nicht zurückgeben.");
+        }
+    }
+
+    @Override
+    public void verlaengern() {
+
     }
 }

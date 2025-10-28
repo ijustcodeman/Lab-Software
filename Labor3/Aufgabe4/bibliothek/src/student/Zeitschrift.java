@@ -27,9 +27,7 @@ public class Zeitschrift extends Medium {
 
     private int seitenanzahl;
 
-    private boolean ausgeliehen;
-
-    private boolean verfuegbar;
+    private boolean status;
 
     /**
      * Konstruktor zum Erstellen einer Zeitschrift.
@@ -106,5 +104,30 @@ public class Zeitschrift extends Medium {
         sb.append("Volume: ").append(getVolume()).append("\n");
         sb.append("Nummer: ").append(getNummer()).append("\n");
         return sb.toString();
+    }
+
+    @Override
+    public void ausleihen() {
+        if (this.status){
+            this.status = false;
+        }
+        else{
+            System.out.println("Diese Zeitschrift ist bereits ausgeliehen.");
+        }
+    }
+
+    @Override
+    public void rueckgabe() {
+        if (!this.status){
+            this.status = true;
+        }
+        else{
+            System.out.println("Du kannst eine Zeitschrift die du nicht besitzt, nicht zurückgeben.");
+        }
+    }
+
+    @Override
+    public void verlaengern() {
+
     }
 }

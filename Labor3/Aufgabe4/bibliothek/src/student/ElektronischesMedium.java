@@ -16,9 +16,7 @@ public class ElektronischesMedium extends Medium {
 
     private double groesse;
 
-    private boolean ausgeliehen;
-
-    private boolean verfuegbar;
+    private boolean status;
 
 
     /**
@@ -62,5 +60,30 @@ public class ElektronischesMedium extends Medium {
         StringBuilder sb = new StringBuilder(super.calculateRepresentation());
         sb.append("URL: ").append(getUrl()).append("\n");
         return sb.toString();
+    }
+
+    @Override
+    public void ausleihen() {
+        if (this.status){
+            this.status = false;
+        }
+        else{
+            System.out.println("Dieses Elektronische Medium ist bereits ausgeliehen.");
+        }
+    }
+
+    @Override
+    public void rueckgabe() {
+        if (!this.status){
+            this.status = true;
+        }
+        else{
+            System.out.println("Du kannst ein Elektronisches Mediums das du nicht besitzt, nicht zurückgeben.");
+        }
+    }
+
+    @Override
+    public void verlaengern() {
+
     }
 }

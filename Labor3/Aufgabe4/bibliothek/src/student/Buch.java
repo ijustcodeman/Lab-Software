@@ -31,9 +31,7 @@ public class Buch extends Medium {
 
     private int seitenanzahl;
 
-    private boolean ausgeliehen;
-
-    private boolean verfuegbar;
+    private boolean status;
 
     /**
      * Konstruktor zum Erstellen eines Buchs.
@@ -149,4 +147,30 @@ public class Buch extends Medium {
         sb.append("Verfasser: ").append(getVerfasser()).append("\n");
         return sb.toString();
     }
+
+    @Override
+    public void ausleihen() {
+        if (this.status){
+            this.status = false;
+        }
+        else{
+            System.out.println("Dieses Buch ist bereits ausgeliehen.");
+        }
+    }
+
+    @Override
+    public void rueckgabe() {
+        if (!this.status){
+            this.status = true;
+        }
+        else{
+            System.out.println("Du kannst ein Buch das du nicht besitzt, nicht zurückgeben.");
+        }
+    }
+
+    @Override
+    public void verlaengern() {
+
+    }
+
 }
