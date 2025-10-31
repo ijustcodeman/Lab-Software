@@ -23,8 +23,14 @@ public class Zeitschrift extends Medium {
      */
     private int nummer;
 
+    /**
+     * Auflage der Zeitschrift.
+     */
     private int auflage;
 
+    /**
+     * Seitenanzahl der Zeitschrift.
+     */
     private int seitenanzahl;
 
     private boolean status;
@@ -35,12 +41,21 @@ public class Zeitschrift extends Medium {
      * @param _issn ISSN der Zeitschrift
      * @param _volume Volume der Zeitschrift
      * @param _nummer Nummer der Zeitschrift
+     * @param _auflage Auflage der Zeitschrift
+     * @param _seitenanzahl Seitenanzahl der Zeitschrift
      */
-    public Zeitschrift(String _titel, String _issn, int _volume, int _nummer){
+    public Zeitschrift(String _titel, String _issn, int _volume, int _nummer, int _auflage, int _seitenanzahl){
         super(_titel);
+
+        if (_issn == null || _issn.isBlank()){
+            throw new IllegalArgumentException("Bitte korrekte Parameter übergeben.");
+        }
         this.issn = _issn;
         this.volume = _volume;
         this.nummer = _nummer;
+        this.auflage = _auflage;
+        this.seitenanzahl = _seitenanzahl;
+        this.status = true;
     }
 
     /**
@@ -93,9 +108,41 @@ public class Zeitschrift extends Medium {
     }
 
     /**
+     * Gibt die Auflage der Zeitschrift zurück.
+     * @return Auflage der Zeitschrift
+     */
+    public int getAuflage(){
+        return this.auflage;
+    }
+
+    /**
+     * Setzt die Auflage der Zeitschrift.
+     * @param _auflage Die neue Auflage der Zeitschrift
+     */
+    public void setAuflage(int _auflage){
+        this.auflage = _auflage;
+    }
+
+    /**
+     * Gibt die Seitenzahl der Zeitschrift zurück.
+     * @return Seitenanzahl der Zeitschrift
+     */
+    public int getSeitenanzahl(){
+        return this.seitenanzahl;
+    }
+
+    /**
+     * Setzt die Seitenanzahl der Zeitschrift.
+     * @param _seitenanzahl Die neue Seitenanzahl der Zeitschrift
+     */
+    public void setSeitenanzahl(int _seitenanzahl){
+        this.seitenanzahl = _seitenanzahl;
+    }
+
+    /**
      * Gibt eine textuelle Darstellung der Zeitschrift zurück.
      * Sie überschreibt die abstrakte Methode aus der Oberklasse Medium.
-     * @return Ein String mit Titel, ISSN, Volume und Nummer der Zeitschrift
+     * @return Ein String mit Titel, ISSN, Volume, Nummer, Auflage und Seitenanzahl der Zeitschrift
      */
     @Override
     public String calculateRepresentation(){
@@ -103,6 +150,8 @@ public class Zeitschrift extends Medium {
         sb.append("ISSN: ").append(getIssn()).append("\n");
         sb.append("Volume: ").append(getVolume()).append("\n");
         sb.append("Nummer: ").append(getNummer()).append("\n");
+        sb.append("Auflage: ").append(getAuflage()).append("\n");
+        sb.append("Seitenanzahl: ").append(getSeitenanzahl()).append("\n");
         return sb.toString();
     }
 

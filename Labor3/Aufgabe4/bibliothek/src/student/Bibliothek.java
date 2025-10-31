@@ -23,23 +23,24 @@ public class Bibliothek {
         // @cd{title = {1}, artist = {Die Beatles}, label = { Apple (Bea (EMI))}}
         // @elMed{title = {Hochschule Stralsund}, URL = {http://www.hochschule-stralsund.de}}
 
-        ArrayList<Medium> mediumSammlung = new ArrayList<>();
-        Scanner sc = new Scanner(System.in);
+        Zettelkasten zettelkasten = new Zettelkasten();
 
-        while (true){
-            try{
-                Medium medium = Medium.parseBibTex(sc);
-                if (medium != null) {
-                    System.out.println(medium.calculateRepresentation());
-                    mediumSammlung.add(medium);
-                } else {
-                    System.out.println("Kein Medium erstellt. Eingabe war ungültig.");
-                    break;
-                }
-            } catch (IllegalArgumentException e){
-                System.out.println("Fehler beim erstellen vom Medium: " + e);
-            }
+        try{
+            zettelkasten.addMedium(new CD("Live At Wembley","Parlophone (EMI)", "Queen", 110.0, 6));
+            zettelkasten.addMedium(new Buch("Duden 01", 2004, "Bib. Institut","3-411-04013-0", "Redaktion", 24, 960));
+            zettelkasten.addMedium(new ElektronischesMedium("Hochschule Stralsund", "http://www.hochschule-stralsund.de", "Nicht Vorhanden", 100.0));
+            zettelkasten.addMedium(new Zeitschrift("Der Spiegel", "0038-7452", 54, 6, 1, 200));
+
+        } catch (IllegalArgumentException e){
+            System.out.println("Fehler beim Hinzufügen eines Mediums: " + e.getMessage());
         }
+
+        // zettelkasten.sort();
+
+        for (Medium medium : zettelkasten){
+            System.out.println(medium.calculateRepresentation());
+        }
+
 
     }
 }

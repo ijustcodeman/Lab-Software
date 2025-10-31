@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="bbdd5020-e03f-448d-8bd0-3e977203a07c" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/Aufgabe1_finished/Aufgabe1_finished.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Aufgabe2_finished/Aufgabe2_finished.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Aufgabe3_finished/Aufgabe3_finished.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Aufgabe4_finished/Aufgabe4_finished.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Aufgabe5_finished/Aufgabe5_finished.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Aufgabe6_finished/Aufgabe6_finished.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Aufgabe8Demo/Aufgabe8Demo.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Aufgabe8_finished/Aufgabe8_finished.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Aufgabe9_finished/Aufgabe9_finished.iml" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 7
+}]]></component>
+  <component name="ProjectId" id="34jp3c4icCyrLejphqOyM697Qep" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "master",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/Lenovo/Desktop/Studium/Labor Software/Labor2"
+  }
+}]]></component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="bbdd5020-e03f-448d-8bd0-3e977203a07c" name="Changes" comment="" />
+      <created>1761736636383</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1761736636383</updated>
+    </task>
+    <servers />
+  </component>
+</project>

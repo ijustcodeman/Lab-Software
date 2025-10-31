@@ -27,10 +27,19 @@ public class Buch extends Medium {
      */
     private String verfasser;
 
+    /**
+     * Auflage vom Buch.
+     */
     private int auflage;
 
+    /**
+     * Seitenanzahl vom Buch.
+     */
     private int seitenanzahl;
 
+    /**
+     * Status vom Buch.
+     */
     private boolean status;
 
     /**
@@ -40,13 +49,23 @@ public class Buch extends Medium {
      * @param _verlag Verlag vom Buch
      * @param _isbn ISBN vom Buch
      * @param _verfasser Verfasser vom Buch
+     * @param _auflage Auflage vom Buch
+     * @param _seitenanzahl Seitenanzahl vom Buch
      */
-    public Buch(String _titel, int _erscheinungsjahr, String _verlag, String _isbn, String _verfasser){
+    public Buch(String _titel, int _erscheinungsjahr, String _verlag, String _isbn, String _verfasser, int _auflage, int _seitenanzahl){
         super(_titel);
+
+        if ((_verlag == null || _verlag.isBlank()) || (_verfasser == null || _verfasser.isBlank())){
+            throw new IllegalArgumentException("Bitte korrekte Parameter übergeben.");
+        }
+
         this.erscheinungsjahr = _erscheinungsjahr;
         this.verlag = _verlag;
         setIsbn(_isbn);
         this.verfasser = _verfasser;
+        this.auflage =_auflage;
+        this.seitenanzahl = _seitenanzahl;
+        this.status = true;
     }
 
     /**
@@ -134,9 +153,41 @@ public class Buch extends Medium {
     }
 
     /**
+     * Gibt die Auflage vom Buch zurück.
+     * @return Auflage vom Buch
+     */
+    public int getAuflage(){
+        return this.auflage;
+    }
+
+    /**
+     * Setzt die Auflage vom Buch.
+     * @param _auflage Neue Auflage vom Buch
+     */
+    public void setAuflage(int _auflage){
+        this.auflage = _auflage;
+    }
+
+    /**
+     * Gibt die Seitenanzahl vom Buch zurück.
+     * @return Seitenanzahl vom Buch
+     */
+    public int getSeitenanzahl(){
+        return this.seitenanzahl;
+    }
+
+    /**
+     * Setzt die Seitenanzahl vom Buch.
+     * @param _seitenanzahl Neue Seitenanzahl vom Buch
+     */
+    public void setSeitenanzahl(int _seitenanzahl){
+        this.seitenanzahl = _seitenanzahl;
+    }
+
+    /**
      * Gibt eine textuelle Darstellung vom Buch zurück.
      * Sie überschreibt die abstrakte Methode aus der Oberklasse Medium.
-     * @return Ein String mit Titel, Erscheinungsjahr, Verlag, ISBN und Verfasser
+     * @return Ein String mit Titel, Erscheinungsjahr, Verlag, ISBN, Verfasser, Auflage und Seitenanzahl
      */
     @Override
     public String calculateRepresentation(){
@@ -145,6 +196,8 @@ public class Buch extends Medium {
         sb.append("Verlag: ").append(getVerlag()).append("\n");
         sb.append("ISBN: ").append(getIsbn()).append("\n");
         sb.append("Verfasser: ").append(getVerfasser()).append("\n");
+        sb.append("Auflage: ").append(getAuflage()).append("\n");
+        sb.append("Seitenanzahl: ").append(getSeitenanzahl()).append("\n");
         return sb.toString();
     }
 

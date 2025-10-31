@@ -20,6 +20,9 @@ abstract class Medium {
      * @param _titel Titel des Mediums
      */
     public Medium(String _titel){
+        if (_titel == null || _titel.isBlank()){
+            throw new IllegalArgumentException("Titel darf nicht leer oder null sein.");
+        }
         this.titel = _titel;
     }
 
@@ -49,10 +52,7 @@ abstract class Medium {
         return sb.toString();
     }
 
-    /**
-     * Parst eine BibTeX-ähnliche Eingabe von der Konsole und erstellt ein entsprechendes Medium.
-     * @return Ein Konkretes Medium Objekt
-     */
+    /*
     public static Medium parseBibTex(Scanner sc){
         System.out.println("Bitte Medien Importieren: ");
          if (!sc.hasNextLine()){
@@ -242,6 +242,9 @@ abstract class Medium {
          }
          return null;
     }
+     */
+
+
 
     public void ausleihen() {
 

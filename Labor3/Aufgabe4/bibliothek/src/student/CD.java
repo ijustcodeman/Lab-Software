@@ -19,25 +19,40 @@ public class CD extends Medium {
      */
     private String kuenstler;
 
+    /**
+     * Gesamtdauer der CD.
+     */
     private double gesamtdauer;
 
+    /**
+     * Altersfreigabe der CD.
+     */
     private int altersfreigabe;
 
+    /**
+     * Status der CD.
+     */
     private boolean status;
-
-
-
 
     /**
      * Konstruktor zum Erstellen einer CD.
      * @param _titel Titel der CD
      * @param _label Label der CD
      * @param _kuenstler Künstler der CD
+     * @param _gesamtdauer Gesamtdauer der CD
+     * @param _altersfreigabe Altersfreigabe der CD
      */
-    public CD(String _titel, String _label, String _kuenstler){
+    public CD(String _titel, String _label, String _kuenstler, double _gesamtdauer, int _altersfreigabe){
         super(_titel);
+
+        if ((_label == null || _label.isBlank()) || (_kuenstler == null || _kuenstler.isBlank())){
+            throw new IllegalArgumentException("Bitte korrekte Parameter übergeben.");
+        }
         this.label = _label;
         this.kuenstler = _kuenstler;
+        this.gesamtdauer = _gesamtdauer;
+        this.altersfreigabe = _altersfreigabe;
+        this.status = true;
     }
 
     /**
@@ -73,15 +88,49 @@ public class CD extends Medium {
     }
 
     /**
+     * Gibt die Gesamtdauer der CD zurück.
+     * @return Gesamtdauer der CD
+     */
+    public double getGesamtdauer(){
+        return this.gesamtdauer;
+    }
+
+    /**
+     * Setzt die Gesamtdauer der CD.
+     * @param _gesamtdauer Die neue Gesamtdauer der CD
+     */
+    public void setGesamtdauer(double _gesamtdauer){
+        this.gesamtdauer = _gesamtdauer;
+    }
+
+    /**
+     * Gibt die Altersfreigabe der CD zurück.
+     * @return Altersfreigabe der CD
+     */
+    public int getAltersfreigabe(){
+        return this.altersfreigabe;
+    }
+
+    /**
+     * Setzt die Altersfreigabe der CD.
+     * @param _altersfreigabe Die neue Altersfreigabe der CD
+     */
+    public void setAltersfreigabe(int _altersfreigabe){
+        this.altersfreigabe = _altersfreigabe;
+    }
+
+    /**
      * Gibt eine textuelle Darstellung von der CD zurück.
      * Sie überschreibt die abstrakte Methode aus der Oberklasse Medium.
-     * @return Ein String mit Titel, Label und Künstler der CD
+     * @return Ein String mit Titel, Label, Künstler, Gesamtdauer und Altersfreigabe der CD
      */
     @Override
     public String calculateRepresentation(){
         StringBuilder sb = new StringBuilder(super.calculateRepresentation());
         sb.append("Label: ").append(getLabel()).append("\n");
         sb.append("Kuenstler: ").append(getKuenstler()).append("\n");
+        sb.append("Gesamtdauer: ").append(getGesamtdauer()).append("\n");
+        sb.append("Altersfreigabe: ").append(getAltersfreigabe()).append("\n");
         return sb.toString();
     }
 
