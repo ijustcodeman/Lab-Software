@@ -136,6 +136,11 @@ public class ElektronischesMedium extends Medium {
 
     @Override
     public void verlaengern() {
-
+        if (!this.status){
+            System.out.println("Du kannst den Eigentumszeitraum eines nicht besitzenden Elektronischen Mediums nicht verlängern.");
+        }
+        else{
+            System.out.println("Eigentumszeitraum verlängert.");
+        }
     }
 }

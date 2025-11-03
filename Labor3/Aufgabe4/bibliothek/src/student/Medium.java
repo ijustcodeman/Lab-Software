@@ -245,15 +245,23 @@ abstract class Medium {
      */
 
 
-
+    /**
+     * Methode, um ein Medium auszuleihen.
+     */
     public void ausleihen() {
 
     }
 
+    /**
+     * Methode, um ein Medium zurückzugeben.
+     */
     public void rueckgabe() {
 
     }
 
+    /**
+     * Methode, um die Eigentumsdauer eines Mediums zu verlängern.
+     */
     public void verlaengern() {
 
     }

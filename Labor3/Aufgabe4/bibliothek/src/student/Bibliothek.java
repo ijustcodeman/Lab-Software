@@ -40,7 +40,5 @@ public class Bibliothek {
         for (Medium medium : zettelkasten){
             System.out.println(medium.calculateRepresentation());
         }
-
-
     }
 }

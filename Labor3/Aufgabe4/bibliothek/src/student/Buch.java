@@ -223,7 +223,12 @@ public class Buch extends Medium {
 
     @Override
     public void verlaengern() {
-
+        if (!this.status){
+            System.out.println("Du kannst den Eigentumszeitraum eines nicht besitzenden buches nicht verlängern.");
+        }
+        else{
+            System.out.println("Eigentumszeitraum verlängert.");
+        }
     }
 
 }

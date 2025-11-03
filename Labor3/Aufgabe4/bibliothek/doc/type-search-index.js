@@ -1,1 +1,0 @@
-typeSearchIndex = [{"l":"Alle Klassen und Schnittstellen","u":"allclasses-index.html","k":"18"},{"p":"student","l":"Bibliothek"},{"p":"student","l":"Buch"},{"p":"student","l":"CD"},{"p":"student","l":"ElektronischesMedium"},{"p":"student","l":"ISBNUtils"},{"p":"student","l":"ParseUtils"},{"p":"student","l":"URLUtils"},{"p":"student","l":"Zeitschrift"}];updateSearchResults();

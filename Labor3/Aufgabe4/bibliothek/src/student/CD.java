@@ -156,6 +156,11 @@ public class CD extends Medium {
 
     @Override
     public void verlaengern() {
-
+        if (!this.status){
+            System.out.println("Du kannst den Eigentumszeitraum einer nicht besitzenden CD nicht verlängern.");
+        }
+        else{
+            System.out.println("Eigentumszeitraum verlängert.");
+        }
     }
 }

@@ -177,6 +177,11 @@ public class Zeitschrift extends Medium {
 
     @Override
     public void verlaengern() {
-
+        if (!this.status){
+            System.out.println("Du kannst den Eigentumszeitraum einer nicht besitzenden Zeitschrift nicht verlängern.");
+        }
+        else{
+            System.out.println("Eigentumszeitraum verlängert.");
+        }
     }
 }
