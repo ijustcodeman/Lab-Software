@@ -1,4 +1,3 @@
-import java.util.Scanner;
 
 /**
  * Die abstrakte Klasse Medium stellt ein allgemeines Medium dar.
@@ -6,7 +5,7 @@ import java.util.Scanner;
  * Außerdem verfügt sie über die Methode parseBibText, welche die Funktion hat Medien zu importieren.
  * @author Max Gebert, 21513
  */
-abstract class Medium {
+abstract class Medium implements Comparable<Medium>{
 
     /**
      * Titel des Mediums
@@ -262,6 +261,11 @@ abstract class Medium {
      */
     public void verlaengern() {
 
+    }
+
+    @Override
+    public int compareTo(Medium medium){
+        return this.getTitel().compareTo(medium.getTitel());
     }
 }
 

@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Iterator;
 
 /**
@@ -14,10 +15,16 @@ public class Zettelkasten implements Iterable<Medium>{
     private ArrayList<Medium> myZettelkasten;
 
     /**
-     * Konstruktor, um die Liste "myZettelkasten" zu initialisieren.
+     * String zum Prüfen, ob eine Liste neu sortiert werden muss.
+     */
+    private String currentSortOrder;
+
+    /**
+     * Konstruktor, um die Liste sowie die currentSortOrder zu initialisieren.
      */
     public Zettelkasten() {
         this.myZettelkasten = new ArrayList<>();
+        this.currentSortOrder = null;
     }
 
     /**
@@ -31,6 +38,7 @@ public class Zettelkasten implements Iterable<Medium>{
             return false;
         }
         this.myZettelkasten.add(medium);
+        this.currentSortOrder = null;
         return true;
     }
 
@@ -49,6 +57,7 @@ public class Zettelkasten implements Iterable<Medium>{
         Medium mediumZumLoeschen = findMedium(_title);
         if (mediumZumLoeschen != null) {
             myZettelkasten.remove(mediumZumLoeschen);
+            currentSortOrder = null;
             return true;
         } else {
             System.out.println("Medium mit Titel '" + _title + "' nicht gefunden.");
@@ -68,6 +77,43 @@ public class Zettelkasten implements Iterable<Medium>{
             }
         }
         return null;
+    }
+
+    /**
+     * Methode, um die Medien in der Liste nach Titel zu sortieren.
+     * @param sortOrder AUFSTEIGEND für aufsteigende Sortierung der Liste und ABSTEIGEND für absteigende Sortierung der Liste
+     * @return Die sortierte Liste
+     */
+    public boolean sort(String sortOrder){
+        if (sortOrder == null || sortOrder.isBlank()){
+            System.out.println("Die Sortierrichtung darf nicht null oder leer sein sein.");
+            return false;
+        }
+
+        String requestedOrder = sortOrder.toUpperCase();
+
+        if (currentSortOrder != null) {
+            if (requestedOrder.equals(currentSortOrder)){
+                System.out.println("Die Liste ist bereits " + requestedOrder + " sortiert. Sortierung übersprungen.");
+                return true;
+            }
+        }
+
+        switch (requestedOrder){
+            case "AUFSTEIGEND":
+                myZettelkasten.sort(Comparator.naturalOrder());
+                currentSortOrder = "AUFSTEIGEND";
+                return true;
+
+            case "ABSTEIGEND":
+                myZettelkasten.sort(Comparator.reverseOrder());
+                currentSortOrder = "ABSTEIGEND";
+                return true;
+
+            default:
+                System.out.println("Fehler: Unbekannte Sortierrichtung.");
+                return false;
+        }
     }
 
     @Override

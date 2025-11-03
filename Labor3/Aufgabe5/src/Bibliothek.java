@@ -33,7 +33,7 @@ public class Bibliothek {
             System.out.println("Fehler beim Hinzufügen eines Mediums: " + e.getMessage());
         }
 
-        // zettelkasten.sort();
+        zettelkasten.sort("AUFSTEIGEND");
 
         for (Medium medium : zettelkasten){
             System.out.println(medium.calculateRepresentation());
