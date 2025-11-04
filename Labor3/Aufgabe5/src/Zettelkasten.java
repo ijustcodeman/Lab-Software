@@ -29,15 +29,15 @@ public class Zettelkasten implements Iterable<Medium>{
 
     /**
      * Methode, um Medien zur Liste hinzuzufügen.
-     * @param medium Medium, welches zur Liste hinzugefügt werden soll
+     * @param _medium Medium, welches zur Liste hinzugefügt werden soll
      * @return true, wenn das übergebene Medium erfolgreich hinzugefügt wurde, anderweitig false
      */
-    public boolean addMedium(Medium medium){
-        if (medium == null) {
+    public boolean addMedium(Medium _medium){
+        if (_medium == null) {
             System.out.println("Fehler: Es wurde kein Medium übergeben (null).");
             return false;
         }
-        this.myZettelkasten.add(medium);
+        this.myZettelkasten.add(_medium);
         this.currentSortOrder = null;
         return true;
     }
@@ -81,16 +81,16 @@ public class Zettelkasten implements Iterable<Medium>{
 
     /**
      * Methode, um die Medien in der Liste nach Titel zu sortieren.
-     * @param sortOrder AUFSTEIGEND für aufsteigende Sortierung der Liste und ABSTEIGEND für absteigende Sortierung der Liste
+     * @param _sortOrder AUFSTEIGEND für aufsteigende Sortierung der Liste und ABSTEIGEND für absteigende Sortierung der Liste
      * @return Die sortierte Liste
      */
-    public boolean sort(String sortOrder){
-        if (sortOrder == null || sortOrder.isBlank()){
+    public boolean sort(String _sortOrder){
+        if (_sortOrder == null || _sortOrder.isBlank()){
             System.out.println("Die Sortierrichtung darf nicht null oder leer sein sein.");
             return false;
         }
 
-        String requestedOrder = sortOrder.toUpperCase();
+        String requestedOrder = _sortOrder.toUpperCase();
 
         if (currentSortOrder != null) {
             if (requestedOrder.equals(currentSortOrder)){
