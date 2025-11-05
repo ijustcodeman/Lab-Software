@@ -1,4 +1,5 @@
 import java.io.Serializable;
+import java.sql.Array;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -25,6 +26,23 @@ public class Zettelkasten implements Iterable<Medium>, Serializable {
      */
     public Zettelkasten() {
         this.myZettelkasten = new ArrayList<>();
+        this.currentSortOrder = null;
+    }
+
+    /**
+     * Gibt den Zettelkasten zurück.
+     * @return Der Zettelkasten
+     */
+    public ArrayList<Medium> getMyZettelkasten(){
+        return this.myZettelkasten;
+    }
+
+    /**
+     * Setzt den Zettelkasten.
+     * @param _myZettelKasten Der neue Zettelkasten
+     */
+    public void setMyZettelkasten(ArrayList<Medium> _myZettelKasten){
+        this.myZettelkasten = _myZettelKasten;
         this.currentSortOrder = null;
     }
 

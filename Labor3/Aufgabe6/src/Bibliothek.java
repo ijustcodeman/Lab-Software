@@ -35,17 +35,21 @@ public class Bibliothek {
 
         zettelkasten.sort("AUFSTEIGEND");
 
-        for (Medium medium : zettelkasten){
-            System.out.println(medium.calculateRepresentation());
-        }
-
+        // HP
         HumanReadablePersistency test1 = new HumanReadablePersistency();
         test1.save(zettelkasten, "test1");
-        // test1.load("test.txt");
+        test1.load("test.txt");
 
+        // BP
         BinaryPersistency test2 = new BinaryPersistency();
         test2.save(zettelkasten, "test2");
 
+        Zettelkasten zk_geladen = test2.load("test2");
 
+        if (zk_geladen != null) {
+            for (Medium m : zk_geladen) {
+                System.out.println("Geladen: " + m.calculateRepresentation());
+            }
+        }
     }
 }

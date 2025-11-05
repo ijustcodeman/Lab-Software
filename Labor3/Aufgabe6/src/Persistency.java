@@ -1,5 +1,6 @@
 /**
  * Dieses Interface beinhaltet Methoden zum Speichern und Laden von einem Zettelkasten.
+ * @author Max Gebert, 21513
  */
 public interface Persistency {
 
@@ -14,5 +15,5 @@ public interface Persistency {
      * Diese Methode lädt einen gespeicherten Zettelkasten anhand vom Dateinamen.
      * @param _dateiname Der Dateiname des Zettelkastens
      */
-    void load(String _dateiname);
+    Zettelkasten load(String _dateiname);
 }

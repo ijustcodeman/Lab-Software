@@ -3,6 +3,7 @@ import java.nio.charset.StandardCharsets;
 
 /**
  * Klasse zum Speichern und Laden von Zettelkasten objekten in menschenlesbarer Form.
+ * @author Max Gebert, 21513
  */
 public class HumanReadablePersistency implements Persistency{
 
@@ -46,7 +47,7 @@ public class HumanReadablePersistency implements Persistency{
     }
 
     @Override
-    public void load(String _dateiname) {
+    public Zettelkasten load(String _dateiname) {
         throw new UnsupportedOperationException();
     }
 }
