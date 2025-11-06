@@ -1,0 +1,34 @@
+ID: 3
+Titel: Der Spiegel
+ISSN: 0038-7452
+Volume: 54
+Nummer: 6
+Auflage: 1
+Seitenanzahl: 200
+
+
+ID: 1
+Titel: Duden 01
+Erscheinungsjahr: 2004
+Verlag: Bib. Institut
+ISBN: 3-411-04013-0
+Verfasser: Redaktion
+Auflage: 24
+Seitenanzahl: 960
+
+
+ID: 2
+Titel: Hochschule Stralsund
+URL: http://www.hochschule-stralsund.de
+Dateiformat: Nicht Vorhanden
+Groesse: 100.0
+
+
+ID: 0
+Titel: Live At Wembley
+Label: Parlophone (EMI)
+Kuenstler: Queen
+Gesamtdauer: 110.0
+Altersfreigabe: 6
+
+
