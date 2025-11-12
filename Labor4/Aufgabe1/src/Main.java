@@ -3,6 +3,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
 
@@ -41,6 +42,9 @@ public class Main {
                 System.out.println(p);
             }
 
+            System.out.println("XML-Kodierung: ");
+            printListAsXML(handler.getAllePersonen());
+
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -50,6 +54,9 @@ public class Main {
         }
     }
 
+    /**
+     * Diese Methode liest von der Konsole Personspezifische Eingaben.
+     */
     public static void readPersonFromConsole(){
         Scanner sc = new Scanner(System.in);
         Person newPerson = new Person();
@@ -108,6 +115,11 @@ public class Main {
             handler.getAllePersonen().add(newPerson);
         }
 
+    /**
+     * Diese Methode prüft, ob eine Eingabe gültig ist.
+     * @param _input Die Eingabe
+     * @return Wenn die Eingabe ungültig ist, wird "Ungültig" zurückgegeben, sonst die Eingabe selbst
+     */
     public static String checkInput(String _input){
         if (_input == null || _input.trim().isEmpty()){
             return "Ungültig";
@@ -116,4 +128,37 @@ public class Main {
             return _input;
         }
     }
+
+    /**
+     * Gibt eine Liste mit Personen als XML-Kodierung auf der Konsole aus.
+     * @param personenListe Liste mit Personen
+     */
+    public static void printListAsXML(ArrayList<Person> personenListe) {
+
+        SimpleDateFormat datumsformat = new SimpleDateFormat("dd.MM.yyyy");
+
+        System.out.println("<?xml version=\"1.0\"?>");
+        System.out.println("<personen>");
+
+        for (Person p : personenListe) {
+            // Sicherstellen, dass das Datum nicht null ist
+            String geburtsdatumStr = "Ungültig";
+            if (p.getGeburtsdatum() != null) {
+                geburtsdatumStr = datumsformat.format(p.getGeburtsdatum());
+            }
+
+            System.out.println("  <person id=\"" + p.getId() + "\">");
+            System.out.println("    <name>" + p.getName() + "</name>");
+            System.out.println("    <vorname>" + p.getVorname() + "</vorname>");
+            System.out.println("    <geburtsdatum>" + geburtsdatumStr + "</geburtsdatum>");
+            System.out.println("    <postleitzahl>" + p.getPostleitzahl() + "</postleitzahl>");
+            System.out.println("    <ort>" + p.getOrt() + "</ort>");
+            System.out.println("    <hobby>" + p.getHobby() + "</hobby>");
+            System.out.println("    <lieblingsgericht>" + p.getLieblingsgericht() + "</lieblingsgericht>");
+            System.out.println("    <lieblingsband>" + p.getLieblingsband() + "</lieblingsband>");
+            System.out.println("  </person>");
+        }
+
+        System.out.println("</personen>");
     }
+}
