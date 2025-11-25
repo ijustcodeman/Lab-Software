@@ -1,0 +1,169 @@
+<mediawiki xmlns="http://www.mediawiki.org/xml/export-0.11/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mediawiki.org/xml/export-0.11/ http://www.mediawiki.org/xml/export-0.11.xsd" version="0.11" xml:lang="de">
+  <siteinfo>
+    <sitename>Wikibooks</sitename>
+    <dbname>dewikibooks</dbname>
+    <base>https://de.wikibooks.org/wiki/Hauptseite</base>
+    <generator>MediaWiki 1.46.0-wmf.3</generator>
+    <case>first-letter</case>
+    <namespaces>
+      <namespace key="-2" case="first-letter">Medium</namespace>
+      <namespace key="-1" case="first-letter">Spezial</namespace>
+      <namespace key="0" case="first-letter" />
+      <namespace key="1" case="first-letter">Diskussion</namespace>
+      <namespace key="2" case="first-letter">Benutzer</namespace>
+      <namespace key="3" case="first-letter">Benutzer Diskussion</namespace>
+      <namespace key="4" case="first-letter">Wikibooks</namespace>
+      <namespace key="5" case="first-letter">Wikibooks Diskussion</namespace>
+      <namespace key="6" case="first-letter">Datei</namespace>
+      <namespace key="7" case="first-letter">Datei Diskussion</namespace>
+      <namespace key="8" case="first-letter">MediaWiki</namespace>
+      <namespace key="9" case="first-letter">MediaWiki Diskussion</namespace>
+      <namespace key="10" case="first-letter">Vorlage</namespace>
+      <namespace key="11" case="first-letter">Vorlage Diskussion</namespace>
+      <namespace key="12" case="first-letter">Hilfe</namespace>
+      <namespace key="13" case="first-letter">Hilfe Diskussion</namespace>
+      <namespace key="14" case="first-letter">Kategorie</namespace>
+      <namespace key="15" case="first-letter">Kategorie Diskussion</namespace>
+      <namespace key="102" case="first-letter">Regal</namespace>
+      <namespace key="103" case="first-letter">Regal Diskussion</namespace>
+      <namespace key="710" case="first-letter">TimedText</namespace>
+      <namespace key="711" case="first-letter">TimedText talk</namespace>
+      <namespace key="828" case="first-letter">Modul</namespace>
+      <namespace key="829" case="first-letter">Modul Diskussion</namespace>
+    </namespaces>
+  </siteinfo>
+  <page>
+    <title>Java Standard</title>
+    <ns>0</ns>
+    <id>2701</id>
+    <revision>
+      <id>982104</id>
+      <parentid>949875</parentid>
+      <timestamp>2021-12-13T18:18:08Z</timestamp>
+      <contributor>
+        <username>DavidL</username>
+        <id>9283</id>
+      </contributor>
+      <comment>Verwenden Sie Links von wikidata.</comment>
+      <origin>982104</origin>
+      <model>wikitext</model>
+      <format>text/x-wiki</format>
+      <text bytes="6163" sha1="6vv1xegq7it7lc93kzidrq7j5m2cmi5" xml:space="preserve">{{Regal|Programmierung}}
+{{Hinweis PDF|Java.pdf|subst:PAGENAME}} 
+{{Druckversion}}
+{{Sammlungshinweis|Java_Standard_Edition}}
+
+== Zusammenfassung des Projekts ==
+{{wikipedia|Java (Programmiersprache)|Java}}
+
+* '''Zielgruppe:''' Einsteiger und Umsteiger, Vorkenntnisse in anderen Programmiersprachen sind hilfreich, werden jedoch nicht vorausgesetzt.
+* '''Lernziele:''' Dieses Buch soll seinen Lesern ein umfassendes Wissen über die Programmiersprache Java vermitteln. – Es ist nicht klar, welche Java-Version behandelt wird, wahrscheinlich 5 (2004) und 6 (2006); aktuell ist jetzt (2021) Version 15.
+* '''Buchpatenschaft / Ansprechperson:''' zz. niemand, das Buch darf gerne übernommen werden.
+* '''Sind Co-Autoren gegenwärtig erwünscht?''' ja
+* '''Richtlinien für Co-Autoren:''' Übernehmt bitte ein komplettes Kapitel. – Bitte beachtet die [[Diskussion:Java Standard#Hinweise und Empfehlungen|Hinweise und Empfehlungen]] für die Zukunft des Buches.
+* '''Projektumfang und Abgrenzung zu anderen Wikibooks:''' Dieses Buch soll eine umfassende Einführung vermitteln, während [[Kurzeinstieg Java]] genau das sein soll, nämlich ein Kurzeinstieg.
+* '''Themenbeschreibung:''' Die Syntax von Java wird beschrieben und anhand von Beispielen und Übungsaufgaben verdeutlicht. Dabei werden allgemeine Programmier-Konzepte vermittelt, die dem Grundstudium der Informatik entlehnt sind.
+* '''Aufbau des Buches:''' siehe Inhaltsverzeichnis
+__TOC__
+
+== Inhaltsverzeichnis ==
+=== [[Java Standard: Einleitung|Einleitung]] ===
+*[[Java Standard: Einrichten der Programmierumgebung|Einrichten der Programmierumgebung]]
+*[[Java Standard: Erste Schritte|Erste Schritte]]
+
+=== [[Java Standard: Grundlagen|Grundlagen]] ===
+&lt;!-- Zu den Grundlagen sollte auch kurz der Unterschied sowie wie Anwendungen bzw. Applets sich als Teile der J2SE sich unterscheiden --&gt;
+*[[Java Standard: Java Virtual Machine|Java Virtual Machine (JVM)]]
+*[[Java Standard: Anwendungsarten| Anwendungen, Applets, Midlets, Servlets]]
+=== Erste Programmierung ===
+*[[Java Standard: Variablen und Bezeichner|Variablen und Bezeichner]]
+*[[Java Standard: Primitive Datentypen|Primitive Datentypen]]
+*[[Java Standard: Zeichenketten|Zeichenketten]]
+*[[Java Standard: Arrays|Arrays]] [[Bild:9von10.png|90%]] &lt;!-- Es fehlen noch die Übungsaufgaben --&gt;
+*[[Java Standard: Operatoren|Operatoren]]
+*[[Java Standard: Kontrollstrukturen|Kontrollstrukturen]]
+*[[Java Standard: Fehlerbehandlung|Fehlerbehandlung]][[Bild:10von10.png|100%]]
+**[[Java Standard: Exceptions|Exceptions]][[Bild:6von10.png|60%]] &lt;!-- Wird noch überarbeitet und ergänzt --&gt;
+**[[Java Standard: Assertions|Assertions]] [[Bild:10von10.png|100%]]
+***[[Java_Standard: Lösungen Assertations|Lösungen der Übungsaufgaben]] [[Bild:10von10.png|100%]]
+*[[Java Standard: Javadoc|Programmdokumentation mit Javadoc]] [[Bild:5von10.png|50%]] &lt;!--  In Arbeit; noch stark unvollständiger Text. --&gt;
+
+=== [[Java Standard: Objektorientierung|Objektorientierung]] ===
+*[[Java Standard: Objektorientierung Sinn und Zweck|Sinn und Zweck]]
+*[[Java Standard: Klassen|Klassen]]
+*[[Java Standard: Objekte|Objekte]]
+*[[Java Standard: Vererbung|Vererbung]]
+*[[Java Standard: Interfaces|Interfaces]]
+*[[Java Standard: Polymorphie|Polymorphie]]
+
+=== [[Java Standard: Das Paket java.lang|Das Paket java.lang]] ===
+* [[Java Standard: Object|Object]]
+* [[Java Standard: Math|Math]]
+* [[Java Standard: Wrapperklassen|Wrapperklassen]]
+* [[Java Standard: String|String]]
+* [[Java Standard: Class|Class]]
+
+=== [[Java Standard: Das Paket java.util|Das Paket java.util]] ===
+* [[Java Standard: Klasse Arrays|Arrays]] [[Bild:9von10.png|90%]] &lt;!-- Es fehlen noch einige wenige Kurzbeschreibungen --&gt;
+* [[Java Standard: StringTokenizer|StringTokenizer]]
+* [[Java Standard: Datum|Datumsverarbeitung]]
+* [[Java Standard: Random|Random]]
+* [[Java Standard: Kompression|Kompression mit ZIP, JAR und GZ]]
+* [[Java Standard: Collection Framework|Collection Framework]]
+* [[Java Standard: Logging API von Java|Logging API von Java]]
+
+=== [[Java Standard: Dateiverarbeitung|Dateiverarbeitung]] ===
+* [[Java Standard: Datenströme|Datenströme]] 
+* [[Java Standard: File|Dateien]]
+
+=== [[Java Standard:_Threads|Threads]] ===
+
+=== [[Java Standard: Grafische Oberflächen|Grafische Oberflächen]] ===
+*[[Java Standard: Das Graphics Object|Das Graphics Object]]
+*[[Java Standard: Grafische Oberflächen mit AWT|AWT]]
+*[[Java Standard: Grafische Oberflächen mit Swing|Swing]]
+*[[Java Standard: Grafische Oberflächen mit SWT|SWT]]
+*[[Java Standard: Übungen|Übungen]]
+
+=== [[Java Standard:_Bilder|Bilder]] ===
+*[[Java Standard:_Icons|Icons]]
+*[[Java Standard:_Push_Model|Push Model]]
+*[[Java Standard:_Immediate_Model|Immediate Model]]
+*[[Java Standard:_Pull Model|Pull Model]]
+*[[Java Standard:_JIMI|JIMI]]
+
+=== [[Java Standard:_3D-Programmierung|3D-Programmierung]] ===
+*[[Java Standard:_Java3D|Java3D]]
+*[[Java Standard:_OpenGL|OpenGL]]
+
+=== [[Java Standard:_Drucken|Drucken]] ===
+
+=== [[Java Standard:_Sound|Sound]] ===
+* [[Java_Standard:_Das_Paket_javax.sound.sampled|javax.sound.sampled]]
+* [[Java Standard:_MIDI|MIDI-Daten]]
+
+=== [[Java Standard:_Test_Trace_Logging|Test, Trace und Logging]] ===
+*[[Java Standard: Logging API von Java|Logging API von Java]]
+*[[Java Standard: java.awt.Robot für grafische Oberflächen| java.awt.Robot für grafische Oberflächen]]
+*[[Java Standard: JUnit|Testen mit der JUnit API]]
+
+=== [[Java Standard:_Netzwerkprogrammierung|Netzwerkprogrammierung]] ===
+*[[Java Standard:_Socket_und ServerSocket_(java.net)|Socket und ServerSocket (java.net)]]
+*[[Java Standard:_RMI|RMI]]
+*[[Java Standard:_Corba|Corba]]
+
+=== [[Java Standard:_Datenbankzugriff|Datenbankzugriff]] ===
+*[[Java Standard:_JDBC|JDBC]] – Java Data Base Connectivity
+*[[Java Standard:JPA|JPA]] – Java Persistence API
+
+=== Referenz ===
+*[[Java Standard: Literatur und Webverzeichnis|Literatur und Webverzeichnis]]
+*[[Java Standard: Programmierstil|Wie schreibe ich ein lesbares Javaprogramm]]
+*[[Java Standard: Schlüsselwörter|Referenz der Schlüsselwörter]]
+*[[Java Standard: Unterschiede zwischen den Java-Editionen|Unterschiede zwischen den Java-Editionen]]
+
+[[Kategorie:Buch]]</text>
+      <sha1>6vv1xegq7it7lc93kzidrq7j5m2cmi5</sha1>
+    </revision>
+  </page>
+</mediawiki>

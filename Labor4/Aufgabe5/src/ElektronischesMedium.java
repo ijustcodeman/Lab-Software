@@ -1,4 +1,4 @@
-import java.io.Serializable;
+import java.io.*;
 
 /**
  * Die Klasse ElektronischesMedium ist eine Unterklasse von Medium.
@@ -147,4 +147,5 @@ public class ElektronischesMedium extends Medium implements Serializable{
             System.out.println("Eigentumszeitraum verlängert.");
         }
     }
+
 }

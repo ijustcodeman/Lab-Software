@@ -209,6 +209,16 @@ public class Zettelkasten implements Iterable<Medium>, Serializable {
         }
     }
 
+    public boolean addWikiBook(String _titel) {
+
+        String wikibooksUrl = "https://de.wikibooks.org/wiki/Spezial:Exportieren/";
+        WikiBook wikiBook = new WikiBook(_titel, wikibooksUrl, "XML/Webseite", 0.0);
+
+        wikiBook.readAndParseXML();
+
+        return addMedium(wikiBook);
+    }
+
     @Override
     public Iterator<Medium> iterator() {
         return myZettelkasten.iterator();

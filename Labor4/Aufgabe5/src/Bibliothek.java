@@ -57,15 +57,10 @@ public class Bibliothek {
 
          */
 
+        zettelkasten.addWikiBook("Java_Standard");
 
-        // Finden von Medien
-        ArrayList<Medium> test = zettelkasten.findMedium("Der Spiegel", "AUFSTEIGEND");
-
-        for(Medium medium: test){
-            System.out.println(medium.calculateRepresentation());
+        for (Medium a: zettelkasten){
+            System.out.println(a.calculateRepresentation());
         }
-
-        // Entfernen von Medien
-        zettelkasten.dropMedium("Der Spiegel", false, 1);
     }
 }
