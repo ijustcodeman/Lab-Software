@@ -59,8 +59,9 @@ public class Bibliothek {
 
         zettelkasten.addWikiBook("Java_Standard");
 
-        for (Medium a: zettelkasten){
-            System.out.println(a.calculateRepresentation());
+        for (String arg : args) {
+            zettelkasten.addWikiBook(arg);
         }
+
     }
 }

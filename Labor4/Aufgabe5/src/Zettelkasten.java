@@ -209,14 +209,41 @@ public class Zettelkasten implements Iterable<Medium>, Serializable {
         }
     }
 
+    /**
+     * Erstellt ein WikiBook Objekt, führt die Suche und das Parsing durch und behandelt Weiterleitungen iterativ.
+     * Fügt das gefundene und geparste Medium anschließend dem Zettelkasten hinzu.
+     *
+     * @param _titel Der zu suchende Titel des WikiBooks
+     * @return true, wenn das Medium erfolgreich gefunden, geparst und hinzugefügt wurde, andernfalls false
+     */
     public boolean addWikiBook(String _titel) {
+        String currentTitle = _titel;
 
-        String wikibooksUrl = "https://de.wikibooks.org/wiki/Spezial:Exportieren/";
-        WikiBook wikiBook = new WikiBook(_titel, wikibooksUrl, "XML/Webseite", 0.0);
+        while (true) {
+            String wikibooksUrl = "https://de.wikibooks.org/wiki/Spezial:Exportieren/";
+            WikiBook wikiBook = new WikiBook(currentTitle, wikibooksUrl, "XML/Webseite", 0.0);
 
-        wikiBook.readAndParseXML();
+            String foundRedirectTitle = null;
 
-        return addMedium(wikiBook);
+            try {
+                foundRedirectTitle = wikiBook.fetchAndParseWikiBook();
+
+            } catch (Exception e) {
+                System.out.println("Fehler beim Suchen/Parsen von '" + currentTitle + "': " + e.getMessage());
+                return false;
+            }
+
+            if (foundRedirectTitle != null) {
+                System.out.println("Weiterleitung gefunden von '" + currentTitle + "' zu '" + foundRedirectTitle + "'. Suche wird fortgesetzt.");
+                currentTitle = foundRedirectTitle;
+
+            } else {
+
+                String info = wikiBook.printWikiBook();
+                System.out.println(info);
+                return addMedium(wikiBook);
+            }
+        }
     }
 
     @Override

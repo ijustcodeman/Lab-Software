@@ -6,22 +6,60 @@ import org.xml.sax.SAXException;
 
 public class WikiBookContentHandler implements ContentHandler {
 
+    /**
+     * Das WikiBook Objekt, in das die geparsten Daten geschrieben werden.
+     */
     private WikiBook bookToFill;
+
+    /**
+     * Speichert den aktuellen Zeichenwert eines XML-Tags.
+     */
     private StringBuilder currentValue = new StringBuilder();
 
+    /**
+     * Speichert den Titel des Zielmediums, falls eine Weiterleitung (<redirect>) gefunden wurde.
+     */
+    private String redirectTitle;
 
+    /**
+     * Flag, welcher true gesetzt wird, wenn der Parser ein redirect tag findet
+     */
+    private boolean isRedirect = false;
 
+    /**
+     * Flag, welcher true gesetzt wird, wenn der Parser sich innerhalb eines contributor tags befindet
+     */
     private boolean inRevisionContributor = false;
+
+    /**
+     * Flag, welcher true gesetzt wird, wenn der Parser sich innerhalb eines username tags befindet
+     */
     private boolean inUsername = false;
+
+    /**
+     * Flag, welcher true gesetzt wird, wenn der Parser sich innerhalb eines ip tags befindet
+     */
     private boolean inIP = false;
 
+    /**
+     * Konstruktor zur Initialisierung des Handlers mit dem zu befüllenden WikiBook Objekt.
+     * @param book Das WikiBook-Objekt, in das die Daten geschrieben werden
+     */
     public WikiBookContentHandler(WikiBook book) {
         this.bookToFill = book;
     }
 
+    /**
+     * Gibt den gefundenen Redirect Titel zurück, damit die aufrufende Logik eine erneute Suche starten kann.
+     * @return Der gefundene Ziel Titel oder null
+     */
+    public String getRedirectTitle() {
+        return redirectTitle;
+    }
+
     @Override
     public void characters(char[] ch, int start, int length) throws SAXException {
-        if (inUsername || inIP) {
+        if (!isRedirect && (inUsername || inIP)) {
             currentValue.append(ch, start, length);
         }
     }
@@ -29,6 +67,19 @@ public class WikiBookContentHandler implements ContentHandler {
     @Override
     public void startElement(String uri, String localName, String qName, Attributes atts) throws SAXException {
         currentValue.setLength(0);
+
+        if (localName.equals("redirect")) {
+            String targetTitle = atts.getValue("title");
+
+            if (targetTitle != null && !targetTitle.isBlank()) {
+                this.redirectTitle = targetTitle;
+                this.isRedirect = true;
+            }
+        }
+
+        if (isRedirect) {
+            return;
+        }
 
         if (inRevisionContributor && localName.equals("username")) {
             inUsername = true;
@@ -41,6 +92,9 @@ public class WikiBookContentHandler implements ContentHandler {
 
     @Override
     public void endElement(String uri, String localName, String qName) throws SAXException {
+        if (isRedirect) {
+            return;
+        }
         if (localName.equals("username")) {
             bookToFill.setLastUsername(currentValue.toString().trim());
             inUsername = false;
@@ -48,7 +102,7 @@ public class WikiBookContentHandler implements ContentHandler {
             bookToFill.setLastIP(currentValue.toString().trim());
             inIP = false;
         } else if (localName.equals("contributor")) {
-            inRevisionContributor = false; // Wir verlassen den Contributor-Block
+            inRevisionContributor = false;
         }
     }
 
