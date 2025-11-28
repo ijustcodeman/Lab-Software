@@ -7,6 +7,11 @@ import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 
+/**
+ * Diese Klasse stellt ein WikiBook dar, welches eigenschaften von einem Elektronischen
+ * Medium erbt.
+ * @author Max Gebert, 21513
+ */
 public class WikiBook extends ElektronischesMedium {
 
     /**

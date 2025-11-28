@@ -3,7 +3,10 @@ import org.xml.sax.ContentHandler;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 
-
+/**
+ * Diese Klasse ist für das Parsen eines XML-Dokuments von einem WikiBook zuständig.
+ * @author Max Gebert, 21513
+ */
 public class WikiBookContentHandler implements ContentHandler {
 
     /**
