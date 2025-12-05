@@ -24,6 +24,7 @@ public class Main extends Application {
             final EventHandler<KeyEvent> keyEventHandler =
                     new EventHandler<KeyEvent>() {
                         public void handle(final KeyEvent keyEvent) {
+                            // extrem verwirrt da es nicht funktioniert, auch schon andere sachen probiert
                             switch (keyEvent.getCode()) {
                                 case F1:
                                     textField2.setText("F1 wurde gedrückt.");
