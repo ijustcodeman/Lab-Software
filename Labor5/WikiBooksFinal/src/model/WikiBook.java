@@ -112,9 +112,28 @@ public class WikiBook extends ElektronischesMedium {
         this.kapitel = _kapitel;
     }
 
-    public static String getURL(String _searchTerm){
+    public static String getWikiBookLink(){
+        return wikiBookLink;
+    }
+    public static String getUrl(String _searchTerm){
         String modified = _searchTerm.replace(" ", "_");
         return wikiBookLink + modified;
+    }
+
+    public String getLastModifiedDate(){
+        return this.lastModifiedDate;
+    }
+
+    public String getLastUsername(){
+        return this.lastUsername;
+    }
+
+    public String getRedirectTitle(){
+        return this.redirectTitle;
+    }
+
+    public String getLastIP(){
+        return this.lastIP;
     }
 
     /**
