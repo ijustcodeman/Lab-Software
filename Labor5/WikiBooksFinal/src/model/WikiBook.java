@@ -136,6 +136,10 @@ public class WikiBook extends ElektronischesMedium {
         return this.lastIP;
     }
 
+    public ArrayList<String> getRegale(){
+        return this.regale;
+    }
+
     /**
      * Führt die Netzwerkanfrage durch und parst das XML-Dokument mithilfe des SAX-Parsers.
      * @return Der umgeleitete Titel, falls eine Weiterleitung gefunden wurde, ansonsten null.
@@ -175,7 +179,7 @@ public class WikiBook extends ElektronischesMedium {
      * Genutzt wurde hierfür die Java Date-Time API.
      * @return Der formatierte Zeitstempel
      */
-    private String getFormattedLastModifiedDate() {
+    public String getFormattedLastModifiedDate() {
         if (this.lastModifiedDate == null || this.lastModifiedDate.isBlank()) {
             return "N/A";
         }
