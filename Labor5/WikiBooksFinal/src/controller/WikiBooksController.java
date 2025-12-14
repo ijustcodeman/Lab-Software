@@ -2,6 +2,7 @@ package controller;
 
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.web.WebEngine;
@@ -68,6 +69,13 @@ public class WikiBooksController {
         });
 
         fetchTask.setOnFailed(event -> {
+
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("FEHLER");
+            alert.setHeaderText(null);
+            alert.setContentText(fetchTask.getException().getMessage());
+            alert.showAndWait();
+
             System.err.println("Fehler beim Abrufen des WikiBooks: " + fetchTask.getException().getMessage());
             lastUsernameValue.setText("Fehler");
             lastChangeValue.setText("Fehler");

@@ -25,17 +25,17 @@
 
         <HBox spacing="5" style="-fx-border-color: lightgray; -fx-border-width: 0 1 0 0;" GridPane.columnIndex="0">
             <Label text="Letzter Bearbeiter: "/>
-            <Label fx:id="lastUsernameValue" text="-"/>
+            <Label fx:id="lastUsernameValue" text="N/A"/>
         </HBox>
 
         <HBox spacing="5" style="-fx-border-color: lightgray; -fx-border-width: 0 1 0 0;" GridPane.columnIndex="1">
             <Label text="Letzte Änderung: "/>
-            <Label fx:id="lastChangeValue" text="-"/>
+            <Label fx:id="lastChangeValue" text="N/A"/>
         </HBox>
 
         <HBox spacing="5" GridPane.columnIndex="2">
             <Label text="Regal: "/>
-            <Label fx:id="regalValue" text="-"/>
+            <Label fx:id="regalValue" text="N/A"/>
         </HBox>
     </GridPane>
 </VBox>
