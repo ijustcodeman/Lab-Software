@@ -4,6 +4,7 @@ import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
@@ -21,6 +22,8 @@ public class WikiBooksController {
     public Label lastUsernameValue;
     public Label lastChangeValue;
     public Label regalValue;
+    public ListView viewMedien;
+    public ListView viewSynonyme;
 
     private Zettelkasten zettelkasten = new Zettelkasten();
 
@@ -106,5 +109,18 @@ public class WikiBooksController {
         } else {
             regalValue.setText(String.join(", ", book.getRegale()));
         }
+    }
+
+    public void onClickAddWikiBook(ActionEvent actionEvent) {
+    }
+
+    public void onClickSortWikiBook(ActionEvent actionEvent) {
+
+    }
+
+    public void onClickDeleteWikiBook(ActionEvent actionEvent) {
+    }
+
+    public void onClickSucheSynonym(ActionEvent actionEvent) {
     }
 }
