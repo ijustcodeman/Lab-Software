@@ -35,10 +35,13 @@ public class WikiBooksController {
         if (extractedTitle.isEmpty()){
             return;
         }
+
+        String safeTitle = WikiBook.getURLTitle(extractedTitle);
+
         WebEngine engine = viewBook.getEngine();
         engine.load(WikiBook.getUrl(extractedTitle));
 
-        startWikiBookFetchTask(extractedTitle);
+        startWikiBookFetchTask(safeTitle);
 
     }
 
@@ -94,16 +97,7 @@ public class WikiBooksController {
             return;
         }
 
-        String username = book.getLastUsername();
-        String ip = book.getLastIP();
-        String contributor = "N/A";
-
-        if (username != null && !username.isBlank()) {
-            contributor = username;
-        } else if (ip != null && !ip.isBlank()) {
-            contributor = ip;
-        }
-        lastUsernameValue.setText(contributor);
+        lastUsernameValue.setText(book.getDisplayContributor());
 
         lastChangeValue.setText(book.getFormattedLastModifiedDate());
 

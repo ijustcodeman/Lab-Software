@@ -115,9 +115,13 @@ public class WikiBook extends ElektronischesMedium {
     public static String getWikiBookLink(){
         return wikiBookLink;
     }
+
+    public static String getURLTitle(String _searchTerm){
+        return _searchTerm.replace(" ", "_");
+    }
+
     public static String getUrl(String _searchTerm){
-        String modified = _searchTerm.replace(" ", "_");
-        return wikiBookLink + modified;
+        return wikiBookLink + getURLTitle(_searchTerm);
     }
 
     public String getLastModifiedDate(){
@@ -283,6 +287,22 @@ public class WikiBook extends ElektronischesMedium {
             }
         }
         return foundKapitel;
+    }
+
+    /**
+     * Gibt den Benutzernamen des letzten Bearbeiters oder die IP-Adresse zurück.
+     * @return Der am besten geeignete Bearbeitername oder "N/A"
+     */
+    public String getDisplayContributor() {
+        if (this.lastUsername != null && !this.lastUsername.isBlank()){
+            return this.lastUsername;
+        }
+        else if (this.lastIP != null && !this.lastIP.isBlank()){
+            return this.lastIP;
+        }
+        else{
+            return "N/A";
+        }
     }
 
     /**
