@@ -8,7 +8,7 @@ import java.io.Serializable;
  * Außerdem verfügt sie über die Methode parseBibText, welche die Funktion hat Medien zu importieren.
  * @author Max Gebert, 21513
  */
-abstract class Medium implements Comparable<Medium>, Serializable{
+public abstract class Medium implements Comparable<Medium>, Serializable{
 
     /**
      * Titel des Mediums

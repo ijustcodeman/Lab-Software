@@ -8,6 +8,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+import model.Medium;
 import model.WikiBook;
 import model.Zettelkasten;
 
@@ -23,7 +24,7 @@ public class WikiBooksController {
     public Label lastChangeValue;
     public Label regalValue;
 
-    public ListView viewMedien = new ListView();
+    public ListView<String> viewMedien = new ListView();
     public ListView viewSynonyme;
 
     private Zettelkasten zettelkasten = new Zettelkasten();
@@ -34,9 +35,25 @@ public class WikiBooksController {
         engine.load(WikiBook.getWikiBookLink());
     }
 
+    public void warningEmptyTitle(){
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("WARNUNG");
+        alert.setHeaderText("Leerer Titel");
+        alert.setContentText("Du musst ein Titel angeben.");
+        alert.showAndWait();
+    }
+
+    private void updateMediaListView() {
+        viewMedien.getItems().clear();
+        for (Medium medium : zettelkasten.getMyZettelkasten()) {
+            viewMedien.getItems().add(medium.getTitel());
+        }
+    }
+
     public void onClickSearchTitle(ActionEvent actionEvent) {
         extractedTitle = searchTitle.getText().trim();
         if (extractedTitle.isEmpty()){
+            warningEmptyTitle();
             return;
         }
 
@@ -116,11 +133,7 @@ public class WikiBooksController {
         extractedTitle = searchTitle.getText().trim();
 
         if (extractedTitle.isEmpty()){
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("WARNUNG");
-            alert.setHeaderText("Lehrer Titel");
-            alert.setContentText("Du musst ein Titel übergeben.");
-            alert.showAndWait();
+            warningEmptyTitle();
             return;
         }
         boolean success = zettelkasten.addWikiBook(extractedTitle);
@@ -134,7 +147,7 @@ public class WikiBooksController {
         }
 
         else{
-            viewMedien.getItems().add(extractedTitle);
+            updateMediaListView();
         }
 
     }
@@ -144,6 +157,17 @@ public class WikiBooksController {
     }
 
     public void onClickDeleteWikiBook(ActionEvent actionEvent) {
+        String selectedTitle = viewMedien.getSelectionModel().getSelectedItem();
+
+        if (selectedTitle == null || selectedTitle.isEmpty()){
+            warningEmptyTitle();
+            return;
+        }
+        if (zettelkasten.dropMedium(selectedTitle, true, 0)) {
+            updateMediaListView();
+        }
+
+
     }
 
     public void onClickSucheSynonym(ActionEvent actionEvent) {
