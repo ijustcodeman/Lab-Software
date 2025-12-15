@@ -22,7 +22,8 @@ public class WikiBooksController {
     public Label lastUsernameValue;
     public Label lastChangeValue;
     public Label regalValue;
-    public ListView viewMedien;
+
+    public ListView viewMedien = new ListView();
     public ListView viewSynonyme;
 
     private Zettelkasten zettelkasten = new Zettelkasten();
@@ -112,6 +113,30 @@ public class WikiBooksController {
     }
 
     public void onClickAddWikiBook(ActionEvent actionEvent) {
+        extractedTitle = searchTitle.getText().trim();
+
+        if (extractedTitle.isEmpty()){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("WARNUNG");
+            alert.setHeaderText("Lehrer Titel");
+            alert.setContentText("Du musst ein Titel übergeben.");
+            alert.showAndWait();
+            return;
+        }
+        boolean success = zettelkasten.addWikiBook(extractedTitle);
+
+        if (!success){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("FEHLER");
+            alert.setHeaderText("Hinzufügen fehlgeschlagen");
+            alert.setContentText("Das folgende WikiBook konnte nicht hinzugefügt werden: " + extractedTitle);
+            alert.showAndWait();
+        }
+
+        else{
+            viewMedien.getItems().add(extractedTitle);
+        }
+
     }
 
     public void onClickSortWikiBook(ActionEvent actionEvent) {

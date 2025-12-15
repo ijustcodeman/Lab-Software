@@ -212,7 +212,9 @@ public class Zettelkasten implements Iterable<Medium>, Serializable {
     }
 
     public boolean addWikiBook(String _titel) {
-        WikiBook book = fetchWikiBook(_titel);
+
+        String safeTitle = WikiBook.getURLTitle(_titel);
+        WikiBook book = fetchWikiBook(safeTitle);
         if (book != null) {
             book.printWikiBook();
             return addMedium(book);
@@ -220,7 +222,7 @@ public class Zettelkasten implements Iterable<Medium>, Serializable {
         return false;
     }
 
-    public WikiBook fetchWikiBook(String _titel) { // <- NEU
+    public WikiBook fetchWikiBook(String _titel) {
         String currentTitle = _titel;
 
         while (true) {
