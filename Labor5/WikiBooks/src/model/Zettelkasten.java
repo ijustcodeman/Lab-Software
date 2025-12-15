@@ -48,6 +48,10 @@ public class Zettelkasten implements Iterable<Medium>, Serializable {
         this.currentSortOrder = null;
     }
 
+    public String getCurrentSortOrder(){
+        return this.currentSortOrder;
+    }
+
     /**
      * Methode, um Medien zur Liste hinzuzufügen.
      * @param _medium model.Medium, welches zur Liste hinzugefügt werden soll

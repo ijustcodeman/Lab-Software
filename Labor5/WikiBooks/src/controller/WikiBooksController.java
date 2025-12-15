@@ -153,6 +153,18 @@ public class WikiBooksController {
     }
 
     public void onClickSortWikiBook(ActionEvent actionEvent) {
+        String sortOrder = zettelkasten.getCurrentSortOrder();
+
+        if (sortOrder == null || sortOrder.equals("ABSTEIGEND")){
+            zettelkasten.sort("AUFSTEIGEND");
+            updateMediaListView();
+        }
+
+        else if (sortOrder.equals("AUFSTEIGEND")){
+            zettelkasten.sort("ABSTEIGEND");
+            updateMediaListView();
+        }
+
 
     }
 
