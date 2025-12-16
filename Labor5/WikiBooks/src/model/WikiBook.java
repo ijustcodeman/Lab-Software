@@ -148,8 +148,9 @@ public class WikiBook extends ElektronischesMedium {
      * Führt die Netzwerkanfrage durch und parst das XML-Dokument mithilfe des SAX-Parsers.
      * @return Der umgeleitete Titel, falls eine Weiterleitung gefunden wurde, ansonsten null.
      */
-    public String fetchAndParseWikiBook() throws Exception {
-        String finalURL = getUrl() + getTitel();
+    public String fetchAndParseWikiBook() throws MyWebException {
+
+        String finalURL = this.getUrl() + getTitel();
 
         try {
             URL url = new URL(finalURL);
@@ -157,24 +158,26 @@ public class WikiBook extends ElektronischesMedium {
             connection.setRequestProperty("User-Agent", "Mozilla/5.0 (...)");
 
             try (InputStream inStream = connection.getInputStream()) {
-
                 XMLReader xmlReader = XMLReaderFactory.createXMLReader();
-
                 WikiBookContentHandler handler = new WikiBookContentHandler(this);
                 xmlReader.setContentHandler(handler);
-
                 InputSource inputSource = new InputSource(inStream);
 
                 xmlReader.parse(inputSource);
 
-                // System.out.println("XML-Daten erfolgreich geparst.");
-
-
                 return handler.getRedirectTitle();
 
+            } catch (IOException e) {
+                String errorMessage = "Verbindungsfehler bei der URL: " + finalURL;
+                throw new MyWebException(errorMessage, e);
+            } catch (Exception e) {
+                String errorMessage = "Fehler beim Parsen oder unerwarteter Fehler beim Abrufen: " + finalURL;
+                throw new MyWebException(errorMessage, e);
             }
-        } catch (IOException e) {
-            throw new IOException("Verbindungsfehler bei der URL: " + finalURL + " | " + e.getMessage());
+        } catch (Exception e) {
+            // Fängt alle restlichen (äußeren) Exceptions ab
+            String errorMessage = "Ein unerwarteter Fehler im I/O-Prozess trat auf: " + finalURL;
+            throw new MyWebException(errorMessage, e);
         }
     }
 

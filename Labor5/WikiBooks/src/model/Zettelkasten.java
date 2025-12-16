@@ -215,6 +215,12 @@ public class Zettelkasten implements Iterable<Medium>, Serializable {
         }
     }
 
+    /**
+     * Fügt ein WikiBook zum Zettelkasten hinzu, nachdem es aus dem Web abgerufen wurde.
+     * @param _titel Der zu suchende Titel des WikiBooks
+     * @return true, wenn das WikiBook erfolgreich abgerufen und hinzugefügt wurde,
+     * andernfalls false (z.B. wenn der Abruf fehlschlägt oder der Titel ungültig ist)
+     */
     public boolean addWikiBook(String _titel) {
 
         String safeTitle = WikiBook.getURLTitle(_titel);
@@ -226,6 +232,15 @@ public class Zettelkasten implements Iterable<Medium>, Serializable {
         return false;
     }
 
+    /**
+     * Ruft die Metadaten eines WikiBooks von der Export-Seite ab.
+     * Die Methode behandelt Weiterleitungen (Redirects) durch wiederholte Abfragen
+     * bis zum endgültigen Zielartikel.
+     * @param _titel Der Titel des WikiBooks, der gesucht werden soll
+     * @return Das vollständig mit Metadaten gefüllte WikiBook Objekt bei Erfolg,
+     * oder null, wenn der Abruf oder das Parsen fehlschlägt
+     * @throws MyWebException Kann ausgelöst werden, wenn beim Prozess ein Fehler auftritt
+     */
     public WikiBook fetchWikiBook(String _titel) {
         String currentTitle = _titel;
 
@@ -238,8 +253,8 @@ public class Zettelkasten implements Iterable<Medium>, Serializable {
             try {
                 foundRedirectTitle = wikiBook.fetchAndParseWikiBook();
 
-            } catch (Exception e) {
-                System.out.println("Fehler beim Suchen/Parsen von '" + currentTitle + "': " + e.getMessage());
+            } catch (MyWebException e) {
+                System.out.println("FEHLER beim Suchen/Parsen von '" + currentTitle + "': " + e.getMessage());
                 return null;
             }
 
