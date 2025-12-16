@@ -8,6 +8,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+import model.BinaryPersistency;
 import model.Medium;
 import model.WikiBook;
 import model.Zettelkasten;
@@ -28,6 +29,9 @@ public class WikiBooksController {
     public ListView viewSynonyme;
 
     private Zettelkasten zettelkasten = new Zettelkasten();
+
+    private BinaryPersistency binaryPersistency = new BinaryPersistency();
+    private final String DEFAULT_FILENAME = "zettelkasten_data";
 
     public void initialize() {
         searchTitle.setOnAction(this::onClickSearchTitle);
@@ -183,5 +187,61 @@ public class WikiBooksController {
     }
 
     public void onClickSucheSynonym(ActionEvent actionEvent) {
+    }
+
+    public void onClickSave(ActionEvent actionEvent) {
+
+        if (zettelkasten.getMyZettelkasten().isEmpty()){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Speichern Fehlgeschlagen");
+            alert.setHeaderText(null);
+            alert.setContentText("Du kannst keinen leeren Zettelkasten speichern.");
+            alert.showAndWait();
+            return;
+        }
+        try {
+            binaryPersistency.save(zettelkasten, DEFAULT_FILENAME);
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Speichern erfolgreich");
+            alert.setHeaderText(null);
+            alert.setContentText("Der Zettelkasten wurde erfolgreich unter '" + DEFAULT_FILENAME + ".ser' gespeichert.");
+            alert.showAndWait();
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("FEHLER beim Speichern");
+            alert.setHeaderText("Konnte Daten nicht serialisieren.");
+            alert.setContentText("Fehler: " + e.getMessage());
+            alert.showAndWait();
+        }
+    }
+
+    public void onClickLoad(ActionEvent actionEvent) {
+        Zettelkasten loadedZk = binaryPersistency.load(DEFAULT_FILENAME);
+
+        if (loadedZk != null) {
+            this.zettelkasten = loadedZk;
+
+            updateMediaListView();
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Laden erfolgreich");
+            alert.setHeaderText(null);
+            alert.setContentText("Der Zettelkasten wurde erfolgreich von '" + DEFAULT_FILENAME + ".ser' geladen.");
+            alert.showAndWait();
+        } else {
+
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("FEHLER beim Laden");
+            alert.setHeaderText("Laden fehlgeschlagen.");
+            alert.setContentText("Die Datei '" + DEFAULT_FILENAME + ".ser' konnte nicht gefunden oder gelesen werden.");
+            alert.showAndWait();
+        }
+    }
+
+    public void onClickImport(ActionEvent actionEvent) {
+    }
+
+    public void onClickExport(ActionEvent actionEvent) {
     }
 }

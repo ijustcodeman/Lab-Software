@@ -12,24 +12,17 @@
     <GridPane hgap="5" vgap="10" alignment="TOP_LEFT">
 
         <columnConstraints>
-            <!-- Linke Labels (Suchbegriff, Synonyme) -->
             <ColumnConstraints minWidth="70" prefWidth="80"/>
 
-            <!-- Synonyme ListView -->
             <ColumnConstraints minWidth="250" prefWidth="280"/>
 
-            <!-- Buttons (Suchen / Suche Synonym) -->
             <ColumnConstraints minWidth="120" prefWidth="140"/>
 
-            <!-- Flexibler Spacer -->
             <ColumnConstraints hgrow="ALWAYS"/>
 
-            <!-- Medien Label -->
             <ColumnConstraints minWidth="60" prefWidth="70"/>
 
-            <!-- Medien ListView -->
             <ColumnConstraints minWidth="200" prefWidth="230"/>
-
         </columnConstraints>
 
         <Label text="Suchbegriff:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
@@ -49,16 +42,14 @@
                GridPane.valignment="TOP"/>
 
         <ListView fx:id="viewSynonyme"
-                  prefHeight="350"
+                  prefHeight="300"
                   GridPane.rowIndex="1"
                   GridPane.columnIndex="1"
-                  GridPane.rowSpan="2"
-                  GridPane.valignment="TOP"/>
+                  GridPane.rowSpan="2"  GridPane.valignment="TOP"/>
 
         <Button text="Suche Synonym"
                 onAction="#onClickSucheSynonym"
-                GridPane.rowIndex="1"
-                GridPane.columnIndex="2"
+                GridPane.rowIndex="2"  GridPane.columnIndex="2"
                 GridPane.valignment="TOP"/>
 
         <Label text="Medien:"
@@ -67,11 +58,18 @@
                GridPane.valignment="TOP"/>
 
         <ListView fx:id="viewMedien"
-                  prefHeight="350"
+                  prefHeight="300"
                   GridPane.rowIndex="1"
                   GridPane.columnIndex="5"
-                  GridPane.rowSpan="2"
-                  GridPane.valignment="TOP"/>
+                  GridPane.rowSpan="2"  GridPane.valignment="TOP"/>
+
+        <HBox spacing="5" GridPane.rowIndex="3" GridPane.columnIndex="5"
+              GridPane.columnSpan="1" GridPane.halignment="RIGHT">
+            <Button text="Speichern" onAction="#onClickSave"/>
+            <Button text="Laden" onAction="#onClickLoad"/>
+            <Button text="Import" onAction="#onClickImport"/>
+            <Button text="Export" onAction="#onClickExport"/>
+        </HBox>
 
     </GridPane>
 
@@ -99,8 +97,8 @@
             <Label text="Regal: " />
             <Label fx:id="regalValue" text="N/A" />
         </HBox>
-      <rowConstraints>
-         <RowConstraints />
-      </rowConstraints>
+        <rowConstraints>
+            <RowConstraints />
+        </rowConstraints>
     </GridPane>
 </VBox>
