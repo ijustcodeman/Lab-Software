@@ -240,8 +240,28 @@ public class WikiBooksController {
     }
 
     public void onClickImport(ActionEvent actionEvent) {
+
+        String errorText = "Die Importfunktion wird in dieser Version nicht unterstützt.";
+
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("FEHLER: Funktion nicht implementiert");
+        alert.setHeaderText("Import fehlgeschlagen");
+        alert.setContentText(errorText);
+        alert.showAndWait();
+
+        throw new UnsupportedOperationException(errorText);
     }
 
     public void onClickExport(ActionEvent actionEvent) {
+
+        String errorText = "Die Exportfunktion wird in dieser Version nicht unterstützt.";
+
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("FEHLER: Funktion nicht implementiert");
+        alert.setHeaderText("Export fehlgeschlagen");
+        alert.setContentText(errorText);
+        alert.showAndWait();
+
+        throw new UnsupportedOperationException(errorText);
     }
 }
