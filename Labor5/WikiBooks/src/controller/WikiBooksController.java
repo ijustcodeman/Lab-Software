@@ -39,33 +39,6 @@ public class WikiBooksController {
         engine.load(WikiBook.getWikiBookLink());
     }
 
-    public void warningEmptyTitle(){
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("WARNUNG");
-        alert.setHeaderText("Leerer Titel");
-        alert.setContentText("Du musst ein Titel angeben.");
-        alert.showAndWait();
-    }
-
-    private void updateMediaListView() {
-        viewMedien.getItems().clear();
-        for (Medium medium : zettelkasten.getMyZettelkasten()) {
-            viewMedien.getItems().add(medium.getTitel());
-        }
-    }
-
-    private void updateCurrentZettelkastenMediaListView(String filterTitle) {
-        viewMedien.getItems().clear();
-
-        String normalizedFilter = filterTitle.toLowerCase();
-
-        for (Medium medium : zettelkasten.getMyZettelkasten()) {
-            if (medium.getTitel().toLowerCase().contains(normalizedFilter)) {
-                viewMedien.getItems().add(medium.getTitel());
-            }
-        }
-    }
-
     public void onClickSearchTitle(ActionEvent actionEvent) {
         extractedTitle = searchTitle.getText().trim();
         if (extractedTitle.isEmpty()){
@@ -83,69 +56,6 @@ public class WikiBooksController {
 
         updateCurrentZettelkastenMediaListView(extractedTitle);
 
-    }
-
-    private void startWikiBookFetchTask(String title) {
-        lastUsernameValue.setText("Wird geladen...");
-        lastChangeValue.setText("Wird geladen...");
-        regalValue.setText("Wird geladen...");
-        searchTitle.setDisable(true);
-
-        Task<WikiBook> fetchTask = new Task<>() {
-            @Override
-            protected WikiBook call() throws Exception {
-                WikiBook book = zettelkasten.fetchWikiBook(title);
-
-                if (book == null) {
-                    throw new Exception("Das WikiBook '" + title + "' konnte nicht abgerufen werden.");
-                }
-                return book;
-            }
-        };
-
-        fetchTask.setOnSucceeded(event -> {
-            WikiBook resultBook = fetchTask.getValue();
-            updateUI(resultBook);
-            searchTitle.setDisable(false);
-
-            zettelkasten.addMedium(resultBook);
-        });
-
-        fetchTask.setOnFailed(event -> {
-
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("FEHLER");
-            alert.setHeaderText(null);
-            alert.setContentText(fetchTask.getException().getMessage());
-            alert.showAndWait();
-
-            System.err.println("Fehler beim Abrufen des WikiBooks: " + fetchTask.getException().getMessage());
-            lastUsernameValue.setText("Fehler");
-            lastChangeValue.setText("Fehler");
-            regalValue.setText("Fehler");
-            searchTitle.setDisable(false);
-        });
-
-        new Thread(fetchTask).start();
-    }
-
-    private void updateUI(WikiBook book) {
-        if (book == null) {
-            lastUsernameValue.setText("N/A");
-            lastChangeValue.setText("N/A");
-            regalValue.setText("N/A");
-            return;
-        }
-
-        lastUsernameValue.setText(book.getDisplayContributor());
-
-        lastChangeValue.setText(book.getFormattedLastModifiedDate());
-
-        if (book.getRegale().isEmpty()) {
-            regalValue.setText("N/A");
-        } else {
-            regalValue.setText(String.join(", ", book.getRegale()));
-        }
     }
 
     public void onClickAddWikiBook(ActionEvent actionEvent) {
@@ -303,6 +213,50 @@ public class WikiBooksController {
         onClickSearchTitle(actionEvent);
     }
 
+    private void startWikiBookFetchTask(String title) {
+        lastUsernameValue.setText("Wird geladen...");
+        lastChangeValue.setText("Wird geladen...");
+        regalValue.setText("Wird geladen...");
+        searchTitle.setDisable(true);
+
+        Task<WikiBook> fetchTask = new Task<>() {
+            @Override
+            protected WikiBook call() throws Exception {
+                WikiBook book = zettelkasten.fetchWikiBook(title);
+
+                if (book == null) {
+                    throw new Exception("Das WikiBook '" + title + "' konnte nicht abgerufen werden.");
+                }
+                return book;
+            }
+        };
+
+        fetchTask.setOnSucceeded(event -> {
+            WikiBook resultBook = fetchTask.getValue();
+            updateUI(resultBook);
+            searchTitle.setDisable(false);
+
+            zettelkasten.addMedium(resultBook);
+        });
+
+        fetchTask.setOnFailed(event -> {
+
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("FEHLER");
+            alert.setHeaderText(null);
+            alert.setContentText(fetchTask.getException().getMessage());
+            alert.showAndWait();
+
+            System.err.println("Fehler beim Abrufen des WikiBooks: " + fetchTask.getException().getMessage());
+            lastUsernameValue.setText("Fehler");
+            lastChangeValue.setText("Fehler");
+            regalValue.setText("Fehler");
+            searchTitle.setDisable(false);
+        });
+
+        new Thread(fetchTask).start();
+    }
+
     private void startWikipediaFetchTask(String searchKeyword) {
         if (searchKeyword.trim().isEmpty()) {
             return;
@@ -334,5 +288,51 @@ public class WikiBooksController {
             exception.printStackTrace();
         });
         new Thread(fetchTask).start();
+    }
+
+    private void updateMediaListView() {
+        viewMedien.getItems().clear();
+        for (Medium medium : zettelkasten.getMyZettelkasten()) {
+            viewMedien.getItems().add(medium.getTitel());
+        }
+    }
+
+    private void updateCurrentZettelkastenMediaListView(String filterTitle) {
+        viewMedien.getItems().clear();
+
+        String normalizedFilter = filterTitle.toLowerCase();
+
+        for (Medium medium : zettelkasten.getMyZettelkasten()) {
+            if (medium.getTitel().toLowerCase().contains(normalizedFilter)) {
+                viewMedien.getItems().add(medium.getTitel());
+            }
+        }
+    }
+
+    private void updateUI(WikiBook book) {
+        if (book == null) {
+            lastUsernameValue.setText("N/A");
+            lastChangeValue.setText("N/A");
+            regalValue.setText("N/A");
+            return;
+        }
+
+        lastUsernameValue.setText(book.getDisplayContributor());
+
+        lastChangeValue.setText(book.getFormattedLastModifiedDate());
+
+        if (book.getRegale().isEmpty()) {
+            regalValue.setText("N/A");
+        } else {
+            regalValue.setText(String.join(", ", book.getRegale()));
+        }
+    }
+
+    public void warningEmptyTitle(){
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("WARNUNG");
+        alert.setHeaderText("Leerer Titel");
+        alert.setContentText("Du musst ein Titel angeben.");
+        alert.showAndWait();
     }
 }
