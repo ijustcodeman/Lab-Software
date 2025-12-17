@@ -2,10 +2,7 @@ package controller;
 
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
@@ -27,6 +24,8 @@ public class WikiBooksController {
 
     public ListView<String> viewMedien = new ListView();
     public ListView<String> viewSynonyme = new ListView();
+
+    public Button searchWikipediaButton;
 
     private Zettelkasten zettelkasten = new Zettelkasten();
 
@@ -262,6 +261,9 @@ public class WikiBooksController {
             return;
         }
 
+        viewSynonyme.setDisable(false);
+        searchWikipediaButton.setDisable(false);
+
         Task<ArrayList<String>> fetchTask = new Task<>() {
             @Override
             protected ArrayList<String> call() throws Exception {
@@ -270,13 +272,27 @@ public class WikiBooksController {
         };
 
         fetchTask.setOnSucceeded(event -> {
+            ArrayList<String> result = fetchTask.getValue();
             viewSynonyme.getItems().clear();
-            viewSynonyme.getItems().addAll(fetchTask.getValue());
+
+            if (result == null || result.isEmpty()){
+                viewSynonyme.getItems().add("<keine>");
+                viewSynonyme.setDisable(true);
+                searchWikipediaButton.setDisable(true);
+            } else {
+                viewSynonyme.setDisable(false);
+                searchWikipediaButton.setDisable(false);
+                viewSynonyme.getItems().addAll(result);
+            }
         });
 
         fetchTask.setOnFailed(event -> {
-            Throwable exception = fetchTask.getException();
+            viewSynonyme.getItems().clear();
+            viewSynonyme.getItems().add("<Fehler>");
+            viewSynonyme.setDisable(true);
+            searchWikipediaButton.setDisable(true);
 
+            Throwable exception = fetchTask.getException();
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("FEHLER: Wikipedia Zugriff");
             alert.setHeaderText("Konnte Wikipediadaten nicht abrufen.");

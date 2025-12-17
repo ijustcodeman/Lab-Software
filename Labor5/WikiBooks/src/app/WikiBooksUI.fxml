@@ -43,6 +43,7 @@
 
         <Button text="Suche Wikipedia"
                 onAction="#onClickSearchWikipedia"  GridPane.rowIndex="2"
+                fx:id="searchWikipediaButton"
                 GridPane.columnIndex="2"
                 GridPane.valignment="TOP"/>
 
