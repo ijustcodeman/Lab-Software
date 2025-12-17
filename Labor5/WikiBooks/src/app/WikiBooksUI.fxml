@@ -27,8 +27,12 @@
 
         <Label text="Suchbegriff:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
         <TextField fx:id="searchTitle" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
-        <Button text="Suchen" onAction="#onClickSearchTitle"
-                GridPane.rowIndex="0" GridPane.columnIndex="2"/>
+
+        <HBox spacing="5" GridPane.rowIndex="0" GridPane.columnIndex="2">
+            <Button text="Suchen" onAction="#onClickSearchTitle"/>
+            <Button text="&lt;" onAction="#onClickBack" fx:id="backButton"/>
+            <Button text="&gt;" onAction="#onClickForward" fx:id="forwardButton"/>
+        </HBox>
 
         <HBox spacing="5" GridPane.rowIndex="0" GridPane.columnIndex="5">
             <Button text="Hinzufügen" onAction="#onClickAddWikiBook"/>

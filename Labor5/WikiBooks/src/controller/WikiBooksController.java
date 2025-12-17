@@ -26,16 +26,23 @@ public class WikiBooksController {
     public ListView<String> viewSynonyme = new ListView();
 
     public Button searchWikipediaButton;
+    public Button backButton;
+    public Button forwardButton;
 
     private Zettelkasten zettelkasten = new Zettelkasten();
 
     private BinaryPersistency binaryPersistency = new BinaryPersistency();
     private final String DEFAULT_FILENAME = "zettelkasten_data";
 
+    private int currentIndex = -1;
+    private ArrayList<String> savedTitles = new ArrayList<>();
+
     public void initialize() {
         searchTitle.setOnAction(this::onClickSearchTitle);
         WebEngine engine = viewBook.getEngine();
         engine.load(WikiBook.getWikiBookLink());
+        backButton.setDisable(true);
+        forwardButton.setDisable(true);
     }
 
     public void onClickSearchTitle(ActionEvent actionEvent) {
@@ -45,15 +52,21 @@ public class WikiBooksController {
             return;
         }
 
-        String safeTitle = WikiBook.getURLTitle(extractedTitle);
+        if (currentIndex >= 0 && savedTitles.get(currentIndex).equals(extractedTitle)) {
+            loadAndFetchEverything(extractedTitle);
+            return;
+        }
 
-        WebEngine engine = viewBook.getEngine();
-        engine.load(WikiBook.getUrl(extractedTitle));
+        if (currentIndex < savedTitles.size() - 1) {
+            savedTitles = new ArrayList<>(savedTitles.subList(0, currentIndex + 1));
+        }
 
-        startWikiBookFetchTask(safeTitle);
-        startWikipediaFetchTask(extractedTitle);
+        savedTitles.add(extractedTitle);
+        currentIndex = savedTitles.size() - 1;
 
-        updateCurrentZettelkastenMediaListView(extractedTitle);
+        loadAndFetchEverything(extractedTitle);
+
+        updateNavigationButtons();
 
     }
 
@@ -184,6 +197,26 @@ public class WikiBooksController {
         alert.showAndWait();
 
         throw new UnsupportedOperationException(errorText);
+    }
+
+    public void onClickBack(ActionEvent actionEvent) {
+        if (currentIndex > 0) {
+            currentIndex--;
+            String title = savedTitles.get(currentIndex);
+            searchTitle.setText(title);
+            loadAndFetchEverything(title);
+            updateNavigationButtons();
+        }
+    }
+
+    public void onClickForward(ActionEvent actionEvent) {
+        if (currentIndex < savedTitles.size() - 1) {
+            currentIndex++;
+            String title = savedTitles.get(currentIndex);
+            searchTitle.setText(title);
+            loadAndFetchEverything(title);
+            updateNavigationButtons();
+        }
     }
 
     public void onSynonymListViewClicked(MouseEvent mouseEvent) {
@@ -351,4 +384,21 @@ public class WikiBooksController {
         alert.setContentText("Du musst ein Titel angeben.");
         alert.showAndWait();
     }
+
+    public void loadAndFetchEverything(String _title){
+        String safeTitle = WikiBook.getURLTitle(_title);
+        WebEngine engine = viewBook.getEngine();
+        engine.load(WikiBook.getUrl(safeTitle));
+
+        startWikiBookFetchTask(safeTitle);
+        startWikipediaFetchTask(_title);
+
+        updateCurrentZettelkastenMediaListView(_title);
+    }
+
+    private void updateNavigationButtons() {
+        backButton.setDisable(currentIndex <= 0);
+        forwardButton.setDisable(currentIndex >= savedTitles.size() - 1);
+    }
+
 }
