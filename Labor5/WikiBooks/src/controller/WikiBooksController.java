@@ -6,12 +6,12 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
-import model.BinaryPersistency;
-import model.Medium;
-import model.WikiBook;
-import model.Zettelkasten;
+import model.*;
+
+import java.util.ArrayList;
 
 public class WikiBooksController {
 
@@ -26,7 +26,7 @@ public class WikiBooksController {
     public Label regalValue;
 
     public ListView<String> viewMedien = new ListView();
-    public ListView viewSynonyme;
+    public ListView<String> viewSynonyme = new ListView();
 
     private Zettelkasten zettelkasten = new Zettelkasten();
 
@@ -54,6 +54,18 @@ public class WikiBooksController {
         }
     }
 
+    private void updateCurrentZettelkastenMediaListView(String filterTitle) {
+        viewMedien.getItems().clear();
+
+        String normalizedFilter = filterTitle.toLowerCase();
+
+        for (Medium medium : zettelkasten.getMyZettelkasten()) {
+            if (medium.getTitel().toLowerCase().contains(normalizedFilter)) {
+                viewMedien.getItems().add(medium.getTitel());
+            }
+        }
+    }
+
     public void onClickSearchTitle(ActionEvent actionEvent) {
         extractedTitle = searchTitle.getText().trim();
         if (extractedTitle.isEmpty()){
@@ -67,6 +79,9 @@ public class WikiBooksController {
         engine.load(WikiBook.getUrl(extractedTitle));
 
         startWikiBookFetchTask(safeTitle);
+        startWikipediaFetchTask(extractedTitle);
+
+        updateCurrentZettelkastenMediaListView(extractedTitle);
 
     }
 
@@ -186,9 +201,6 @@ public class WikiBooksController {
 
     }
 
-    public void onClickSucheSynonym(ActionEvent actionEvent) {
-    }
-
     public void onClickSave(ActionEvent actionEvent) {
 
         if (zettelkasten.getMyZettelkasten().isEmpty()){
@@ -263,5 +275,64 @@ public class WikiBooksController {
         alert.showAndWait();
 
         throw new UnsupportedOperationException(errorText);
+    }
+
+    public void onSynonymListViewClicked(MouseEvent mouseEvent) {
+        if (mouseEvent.getClickCount() == 2) {
+            String selectedTitle = viewSynonyme.getSelectionModel().getSelectedItem();
+
+            if (selectedTitle != null && !selectedTitle.isEmpty()) {
+                onClickSearchWikipedia(null);
+            }
+        }
+    }
+
+    public void onClickSearchWikipedia(ActionEvent actionEvent) {
+        String selectedTitle = viewSynonyme.getSelectionModel().getSelectedItem();
+
+        if (selectedTitle == null || selectedTitle.isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("WARNUNG");
+            alert.setHeaderText(null);
+            alert.setContentText("Bitte wählen Sie zuerst einen Wikipedia-Titel aus der Liste aus.");
+            alert.showAndWait();
+            return;
+        }
+        searchTitle.setText(selectedTitle);
+
+        onClickSearchTitle(actionEvent);
+    }
+
+    private void startWikipediaFetchTask(String searchKeyword) {
+        if (searchKeyword.trim().isEmpty()) {
+            return;
+        }
+
+        Task<ArrayList<String>> fetchTask = new Task<>() {
+            @Override
+            protected ArrayList<String> call() throws Exception {
+                return WikipediaAPI.fetchWikipediaTitles(searchKeyword);
+            }
+        };
+
+        fetchTask.setOnSucceeded(event -> {
+            viewSynonyme.getItems().clear();
+            viewSynonyme.getItems().addAll(fetchTask.getValue());
+        });
+
+        fetchTask.setOnFailed(event -> {
+            Throwable exception = fetchTask.getException();
+
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("FEHLER: Wikipedia Zugriff");
+            alert.setHeaderText("Konnte Wikipediadaten nicht abrufen.");
+            alert.setContentText(exception.getMessage());
+            alert.showAndWait();
+
+            System.err.println("Fehler beim Abrufen der Wikipedia Daten: " + exception.getMessage());
+            // zum debuggen
+            exception.printStackTrace();
+        });
+        new Thread(fetchTask).start();
     }
 }

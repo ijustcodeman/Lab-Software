@@ -41,16 +41,18 @@
                GridPane.columnIndex="0"
                GridPane.valignment="TOP"/>
 
+        <Button text="Suche Wikipedia"
+                onAction="#onClickSearchWikipedia"  GridPane.rowIndex="2"
+                GridPane.columnIndex="2"
+                GridPane.valignment="TOP"/>
+
         <ListView fx:id="viewSynonyme"
                   prefHeight="300"
                   GridPane.rowIndex="1"
                   GridPane.columnIndex="1"
-                  GridPane.rowSpan="2"  GridPane.valignment="TOP"/>
-
-        <Button text="Suche Synonym"
-                onAction="#onClickSucheSynonym"
-                GridPane.rowIndex="2"  GridPane.columnIndex="2"
-                GridPane.valignment="TOP"/>
+                  GridPane.rowSpan="2"
+                  GridPane.valignment="TOP"
+                  onMouseClicked="#onSynonymListViewClicked" />
 
         <Label text="Medien:"
                GridPane.rowIndex="1"
