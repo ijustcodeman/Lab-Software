@@ -1,9 +1,13 @@
 package controller;
 
+import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import model.*;
@@ -32,6 +36,11 @@ public class WikiBooksController {
 
     public ComboBox<String> navigationComboBox = new ComboBox<>();
 
+    public VBox rootContainer;
+    public MenuBar mainMenuBar;
+    public Button searchButton;
+    public Button exportButton;
+
     private Zettelkasten zettelkasten = new Zettelkasten();
 
     private BinaryPersistency binaryPersistency = new BinaryPersistency();
@@ -49,6 +58,59 @@ public class WikiBooksController {
         backButton.setDisable(true);
         forwardButton.setDisable(true);
         navigationComboBox.setOnAction(this::onNavigationChanged);
+
+        viewSynonyme.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                String selected = viewSynonyme.getSelectionModel().getSelectedItem();
+                if (selected != null && !selected.isEmpty() && !selected.equals("<keine>")) {
+                    searchTitle.setText(selected);
+                    onClickSearchTitle(new ActionEvent());
+                }
+            }
+        });
+
+        exportButton.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.TAB && !event.isShiftDown()) {
+                mainMenuBar.requestFocus();
+                event.consume();
+            }
+        });
+
+        mainMenuBar.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+            if (event.getCode() == KeyCode.TAB && !event.isShiftDown()) {
+                if (!backButton.isDisable()) {
+                    backButton.requestFocus();
+                } else if (!navigationComboBox.isDisable()) {
+                    navigationComboBox.requestFocus();
+                } else {
+                    forwardButton.requestFocus();
+                }
+                event.consume();
+            }
+            else if (event.getCode() == KeyCode.ENTER || event.getCode() == KeyCode.SPACE) {
+                onAboutMenuAction(new ActionEvent());
+                event.consume();
+            }
+        });
+
+        navigationComboBox.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER || event.getCode() == KeyCode.SPACE) {
+                if (!navigationComboBox.isShowing()) {
+                    navigationComboBox.show();
+                    event.consume();
+                }
+            }
+        });
+
+        // sicherstellen, dass die szene geladen ist
+        Platform.runLater(() -> {
+            rootContainer.getScene().addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+                if (event.getCode() == KeyCode.F1) {
+                    onAboutMenuAction(new ActionEvent());
+                    event.consume();
+                }
+            });
+        });
     }
 
     public void onClickSearchTitle(ActionEvent actionEvent) {

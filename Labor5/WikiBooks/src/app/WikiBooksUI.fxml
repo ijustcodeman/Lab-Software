@@ -5,82 +5,75 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.web.*?>
 
-<VBox prefHeight="600.0" prefWidth="900.0" spacing="0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.WikiBooksController">
+<VBox fx:id="rootContainer" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.WikiBooksController">
 
-    <MenuBar>
+    <MenuBar fx:id="mainMenuBar">
         <Menu text="?">
             <MenuItem text="Über dieses Programm" onAction="#onAboutMenuAction"/>
         </Menu>
     </MenuBar>
 
     <HBox spacing="10" alignment="CENTER_LEFT" style="-fx-background-color: #f4f4f4;">
-        <padding>
-            <Insets bottom="5" left="10" right="10" top="5" />
-        </padding>
+        <padding><Insets bottom="5" left="10" right="10" top="5" /></padding>
 
-        <Button text="Zurück" fx:id="backButton" onAction="#onClickBack"/>
+        <Button fx:id="backButton" text="Zurück" onAction="#onClickBack"/>
         <ComboBox fx:id="navigationComboBox" onAction="#onNavigationChanged" prefWidth="150" />
-        <Button text="Vor" fx:id="forwardButton" onAction="#onClickForward"/>
+        <Button fx:id="forwardButton" text="Vor" onAction="#onClickForward"/>
 
-        <Separator orientation="VERTICAL" />
+        <Separator orientation="VERTICAL"/>
 
         <Button text="Hinzufügen" onAction="#onClickAddWikiBook"/>
         <Button text="Sortieren" onAction="#onClickSortWikiBook"/>
         <Button text="Löschen" onAction="#onClickDeleteWikiBook"/>
 
-        <Separator orientation="VERTICAL" />
+        <Separator orientation="VERTICAL"/>
 
-        <Label text="Suchbegriff:" />
+        <Label text="Suchbegriff:"/>
         <TextField fx:id="searchTitle" HBox.hgrow="ALWAYS" />
-        <Button text="Suchen" onAction="#onClickSearchTitle" />
+        <Button fx:id="searchButton" text="Suchen" onAction="#onClickSearchTitle" />
     </HBox>
 
     <SplitPane dividerPositions="0.4" VBox.vgrow="ALWAYS">
-        <items>
-            <SplitPane dividerPositions="0.5">
-                <VBox spacing="5">
-                    <padding><Insets top="5" bottom="5" left="5" right="5"/></padding>
-                    <Label text="Synonyme:" style="-fx-font-weight: bold;"/>
-                    <ListView fx:id="viewSynonyme" VBox.vgrow="ALWAYS" onMouseClicked="#onSynonymListViewClicked"/>
-                    <Button text="Suche Synonym" onAction="#onClickSearchWikipedia" fx:id="searchWikipediaButton" maxWidth="Infinity"/>
-                </VBox>
-                <VBox spacing="5">
-                    <padding>
-                        <Insets top="5" bottom="5" left="5" right="5"/>
-                    </padding>
-
-                    <Label text="Medien:" style="-fx-font-weight: bold;"/>
-
-                    <ListView fx:id="viewMedien" VBox.vgrow="ALWAYS" />
-
-                    <HBox spacing="5" alignment="CENTER_RIGHT">
-                        <Button text="Speichern" onAction="#onClickSave" />
-                        <Button text="Laden" onAction="#onClickLoad" />
-                        <Button text="Import" onAction="#onClickImport" />
-                        <Button text="Export" onAction="#onClickExport" />
-                    </HBox>
-                </VBox>
-            </SplitPane>
-
-            <WebView fx:id="viewBook" />
-        </items>
+        <SplitPane dividerPositions="0.5">
+            <VBox spacing="5">
+                <padding>
+                    <Insets top="5" bottom="5" left="5" right="5"/>
+                </padding>
+                <Label text="Synonyme:" style="-fx-font-weight: bold;"/>
+                <ListView fx:id="viewSynonyme" VBox.vgrow="ALWAYS" onMouseClicked="#onSynonymListViewClicked"/>
+                <Button fx:id="searchWikipediaButton" text="Suche Synonym" onAction="#onClickSearchWikipedia"
+                        maxWidth="Infinity"/>
+            </VBox>
+            <VBox spacing="5">
+                <padding>
+                    <Insets top="5" bottom="5" left="5" right="5"/>
+                </padding>
+                <Label text="Medien:" style="-fx-font-weight: bold;"/>
+                <ListView fx:id="viewMedien" VBox.vgrow="ALWAYS"/>
+                <HBox spacing="5" alignment="CENTER_RIGHT">
+                    <Button text="Speichern" onAction="#onClickSave"/>
+                    <Button text="Laden" onAction="#onClickLoad"/>
+                    <Button text="Import" onAction="#onClickImport"/>
+                    <Button text="Export" onAction="#onClickExport" fx:id="exportButton"/>
+                </HBox>
+            </VBox>
+        </SplitPane>
+        <WebView fx:id="viewBook" focusTraversable="false"/>
     </SplitPane>
 
     <HBox spacing="20" style="-fx-background-color: #eee; -fx-border-color: #ccc; -fx-border-width: 1 0 0 0;">
-        <padding>
-            <Insets bottom="5" left="10" right="10" top="5" />
-        </padding>
+        <padding><Insets bottom="5" left="10" right="10" top="5" /></padding>
         <HBox spacing="5">
             <Label text="Letzter Bearbeiter:" style="-fx-font-weight: bold;"/>
-            <Label fx:id="lastUsernameValue" text="n.b." />
+            <Label fx:id="lastUsernameValue" text="n.b."/>
         </HBox>
         <HBox spacing="5">
             <Label text="Letzte Änderung:" style="-fx-font-weight: bold;"/>
-            <Label fx:id="lastChangeValue" text="n.b." />
+            <Label fx:id="lastChangeValue" text="n.b."/>
         </HBox>
         <HBox spacing="5" HBox.hgrow="ALWAYS" alignment="CENTER_RIGHT">
             <Label text="Regal:" style="-fx-font-weight: bold;"/>
-            <Label fx:id="regalValue" text="n.b." />
+            <Label fx:id="regalValue" text="n.b."/>
         </HBox>
     </HBox>
 </VBox>
