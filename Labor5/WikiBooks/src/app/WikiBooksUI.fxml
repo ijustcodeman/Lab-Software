@@ -31,6 +31,7 @@
         <HBox spacing="5" GridPane.rowIndex="0" GridPane.columnIndex="2">
             <Button text="Suchen" onAction="#onClickSearchTitle"/>
             <Button text="&lt;" onAction="#onClickBack" fx:id="backButton"/>
+            <ComboBox fx:id="navigationComboBox" onAction="#onNavigationChanged" prefWidth="120" promptText="Auswahl"/>
             <Button text="&gt;" onAction="#onClickForward" fx:id="forwardButton"/>
         </HBox>
 

@@ -9,6 +9,7 @@ import javafx.scene.web.WebView;
 import model.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class WikiBooksController {
 
@@ -22,12 +23,14 @@ public class WikiBooksController {
     public Label lastChangeValue;
     public Label regalValue;
 
-    public ListView<String> viewMedien = new ListView();
-    public ListView<String> viewSynonyme = new ListView();
+    public ListView<String> viewMedien = new ListView<>();
+    public ListView<String> viewSynonyme = new ListView<>();
 
     public Button searchWikipediaButton;
     public Button backButton;
     public Button forwardButton;
+
+    public ComboBox<String> navigationComboBox = new ComboBox<>();
 
     private Zettelkasten zettelkasten = new Zettelkasten();
 
@@ -37,12 +40,15 @@ public class WikiBooksController {
     private int currentIndex = -1;
     private ArrayList<String> savedTitles = new ArrayList<>();
 
+    private boolean isInternalUpdate = false;
+
     public void initialize() {
         searchTitle.setOnAction(this::onClickSearchTitle);
         WebEngine engine = viewBook.getEngine();
         engine.load(WikiBook.getWikiBookLink());
         backButton.setDisable(true);
         forwardButton.setDisable(true);
+        navigationComboBox.setOnAction(this::onNavigationChanged);
     }
 
     public void onClickSearchTitle(ActionEvent actionEvent) {
@@ -67,6 +73,7 @@ public class WikiBooksController {
         loadAndFetchEverything(extractedTitle);
 
         updateNavigationButtons();
+        updateCombobox();
 
     }
 
@@ -206,6 +213,7 @@ public class WikiBooksController {
             searchTitle.setText(title);
             loadAndFetchEverything(title);
             updateNavigationButtons();
+            updateCombobox();
         }
     }
 
@@ -216,6 +224,7 @@ public class WikiBooksController {
             searchTitle.setText(title);
             loadAndFetchEverything(title);
             updateNavigationButtons();
+            updateCombobox();
         }
     }
 
@@ -243,6 +252,22 @@ public class WikiBooksController {
         searchTitle.setText(selectedTitle);
 
         onClickSearchTitle(actionEvent);
+    }
+
+    public void onNavigationChanged(ActionEvent actionEvent) {
+        if (isInternalUpdate) return;
+
+        int selectedComboIndex = navigationComboBox.getSelectionModel().getSelectedIndex();
+
+        if (selectedComboIndex != -1) {
+            currentIndex = (savedTitles.size() - 1) - selectedComboIndex;
+
+            String title = savedTitles.get(currentIndex);
+            searchTitle.setText(title);
+
+            loadAndFetchEverything(title);
+            updateNavigationButtons();
+        }
     }
 
     private void startWikiBookFetchTask(String title) {
@@ -377,6 +402,27 @@ public class WikiBooksController {
         }
     }
 
+    private void updateNavigationButtons() {
+        backButton.setDisable(currentIndex <= 0);
+        forwardButton.setDisable(currentIndex >= savedTitles.size() - 1);
+    }
+
+    private void updateCombobox() {
+        isInternalUpdate = true;
+
+        ArrayList<String> reversedTitles = new ArrayList<>(savedTitles);
+        Collections.reverse(reversedTitles);
+
+        navigationComboBox.getItems().setAll(reversedTitles);
+
+        if (currentIndex != -1) {
+            int comboIndex = (savedTitles.size() - 1) - currentIndex;
+            navigationComboBox.getSelectionModel().select(comboIndex);
+        }
+
+        isInternalUpdate = false;
+    }
+
     public void warningEmptyTitle(){
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("WARNUNG");
@@ -396,9 +442,5 @@ public class WikiBooksController {
         updateCurrentZettelkastenMediaListView(_title);
     }
 
-    private void updateNavigationButtons() {
-        backButton.setDisable(currentIndex <= 0);
-        forwardButton.setDisable(currentIndex >= savedTitles.size() - 1);
-    }
 
 }
