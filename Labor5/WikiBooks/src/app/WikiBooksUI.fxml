@@ -65,15 +65,15 @@
         <padding><Insets bottom="5" left="10" right="10" top="5" /></padding>
         <HBox spacing="5">
             <Label text="Letzter Bearbeiter:" style="-fx-font-weight: bold;"/>
-            <Label fx:id="lastUsernameValue" text="n.b."/>
+            <Label fx:id="lastUsernameValue" text="N/A"/>
         </HBox>
         <HBox spacing="5">
             <Label text="Letzte Änderung:" style="-fx-font-weight: bold;"/>
-            <Label fx:id="lastChangeValue" text="n.b."/>
+            <Label fx:id="lastChangeValue" text="N/A"/>
         </HBox>
         <HBox spacing="5" HBox.hgrow="ALWAYS" alignment="CENTER_RIGHT">
             <Label text="Regal:" style="-fx-font-weight: bold;"/>
-            <Label fx:id="regalValue" text="n.b."/>
+            <Label fx:id="regalValue" text="N/A"/>
         </HBox>
     </HBox>
 </VBox>

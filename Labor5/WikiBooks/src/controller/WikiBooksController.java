@@ -102,6 +102,26 @@ public class WikiBooksController {
             }
         });
 
+        viewMedien.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) {
+                String selectedTitle = viewMedien.getSelectionModel().getSelectedItem();
+                if (selectedTitle != null && !selectedTitle.isEmpty()) {
+                    searchTitle.setText(selectedTitle);
+                    onClickSearchTitle(new ActionEvent());
+                }
+            }
+        });
+
+        viewMedien.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                String selectedTitle = viewMedien.getSelectionModel().getSelectedItem();
+                if (selectedTitle != null) {
+                    searchTitle.setText(selectedTitle);
+                    onClickSearchTitle(new ActionEvent());
+                }
+            }
+        });
+
         // sicherstellen, dass die szene geladen ist
         Platform.runLater(() -> {
             rootContainer.getScene().addEventFilter(KeyEvent.KEY_PRESSED, event -> {
@@ -163,33 +183,57 @@ public class WikiBooksController {
     }
 
     public void onClickSortWikiBook(ActionEvent actionEvent) {
-        String sortOrder = zettelkasten.getCurrentSortOrder();
+        int anzahlMedien = zettelkasten.getMyZettelkasten().size();
 
+        if (anzahlMedien < 2) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Sortieren nicht möglich");
+            alert.setHeaderText(null);
+
+            String nachricht;
+            if (anzahlMedien == 0) {
+                nachricht = "Der Zettelkasten ist leer. Es gibt nichts zu sortieren.";
+            } else {
+                nachricht = "Es befindet sich nur ein Medium im Zettelkasten. Eine Sortierung ist erst ab zwei Medien sinnvoll.";
+            }
+
+            alert.setContentText(nachricht);
+            alert.showAndWait();
+            return;
+        }
+
+        String sortOrder = zettelkasten.getCurrentSortOrder();
         if (sortOrder == null || sortOrder.equals("ABSTEIGEND")){
             zettelkasten.sort("AUFSTEIGEND");
-            updateMediaListView();
-        }
-
-        else if (sortOrder.equals("AUFSTEIGEND")){
+        } else {
             zettelkasten.sort("ABSTEIGEND");
-            updateMediaListView();
         }
-
-
+        updateMediaListView();
     }
 
     public void onClickDeleteWikiBook(ActionEvent actionEvent) {
         String selectedTitle = viewMedien.getSelectionModel().getSelectedItem();
 
-        if (selectedTitle == null || selectedTitle.isEmpty()){
-            warningEmptyTitle();
+        if (selectedTitle == null) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Löschen nicht möglich");
+            alert.setHeaderText(null);
+            alert.setContentText("Bitte wählen Sie erst ein Medium aus der Liste 'Medien' aus.");
+            alert.showAndWait();
             return;
         }
-        if (zettelkasten.dropMedium(selectedTitle, true, 0)) {
+
+        boolean success = zettelkasten.dropMedium(selectedTitle, true, 0);
+
+        if (success) {
             updateMediaListView();
+            viewMedien.getSelectionModel().clearSelection();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Fehler");
+            alert.setContentText("Das Medium konnte nicht aus dem Zettelkasten gelöscht werden.");
+            alert.showAndWait();
         }
-
-
     }
 
     public void onClickSave(ActionEvent actionEvent) {
@@ -386,8 +430,6 @@ public class WikiBooksController {
             WikiBook resultBook = fetchTask.getValue();
             updateUI(resultBook);
             searchTitle.setDisable(false);
-
-            zettelkasten.addMedium(resultBook);
         });
 
         fetchTask.setOnFailed(event -> {
@@ -465,18 +507,6 @@ public class WikiBooksController {
         }
     }
 
-    private void updateCurrentZettelkastenMediaListView(String filterTitle) {
-        viewMedien.getItems().clear();
-
-        String normalizedFilter = filterTitle.toLowerCase();
-
-        for (Medium medium : zettelkasten.getMyZettelkasten()) {
-            if (medium.getTitel().toLowerCase().contains(normalizedFilter)) {
-                viewMedien.getItems().add(medium.getTitel());
-            }
-        }
-    }
-
     private void updateUI(WikiBook book) {
         if (book == null) {
             lastUsernameValue.setText("N/A");
@@ -532,8 +562,6 @@ public class WikiBooksController {
 
         startWikiBookFetchTask(safeTitle);
         startWikipediaFetchTask(_title);
-
-        updateCurrentZettelkastenMediaListView(_title);
     }
 
 }

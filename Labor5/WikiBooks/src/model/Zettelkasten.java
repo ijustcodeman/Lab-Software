@@ -163,17 +163,18 @@ public class Zettelkasten implements Iterable<Medium>, Serializable {
      * * @return Ein Comparator, der die Sortierreihenfolge der model.Medium-Objekte definiert
      */
     private static Comparator<Medium> getMediumComparator() {
-        Comparator<Medium> primarTitel = Comparator.naturalOrder();
+        Comparator<Medium> primarTitel = Comparator.comparing(
+                Medium::getTitel,
+                String.CASE_INSENSITIVE_ORDER
+        );
 
         Comparator<Medium> typSorter = Comparator.comparing(m -> m.getClass().getSimpleName());
 
         Comparator<Medium> idSorter = Comparator.comparing(Medium::getID);
 
-        Comparator<Medium> finalComparator = primarTitel
+        return primarTitel
                 .thenComparing(typSorter)
                 .thenComparing(idSorter);
-
-        return finalComparator;
     }
 
     /**
