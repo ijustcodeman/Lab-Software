@@ -270,6 +270,38 @@ public class WikiBooksController {
         }
     }
 
+    public void onAboutMenuAction(ActionEvent actionEvent) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Über dieses Programm");
+        alert.setHeaderText(null);
+
+        String content = "Alle redaktionellen Inhalte stammen von den Internetseiten der Projekte Wikibooks und Wortschatz.\n\n" +
+                "Die von Wikibooks bezogenen Inhalte unterliegen seit dem 22. Juni 2009 unter der Lizenz CC-BY-SA 3.0 " +
+                "Unported zur Verfügung. Eine deutschsprachige Dokumentation für Weiternutzer findet man in den " +
+                "Nutzungsbedingungen der Wikimedia Foundation. Für alle Inhalte von Wikibooks galt bis zum 22. Juni " +
+                "2009 standardmäßig die GNU FDL (GNU Free Documentation License, engl. für GNU-Lizenz für freie " +
+                "Dokumentation). Der Text der GNU FDL ist unter " +
+                "http://de.wikipedia.org/wiki/Wikipedia:GNU_Free_Documentation_License verfügbar.\n\n" +
+                "Die von Wortschatz (http://wortschatz.uni-leipzig.de/) oder Wikipedia (www.wikipedia.de) bezogenen " +
+                "Inhalte sind urheberrechtlich geschützt. Sie werden hier für wissenschaftliche Zwecke eingesetzt und " +
+                "dürfen darüber hinaus in keiner Weise genutzt werden.\n\n" +
+                "Dieses Programm ist nur zur Nutzung durch den Programmierer selbst gedacht. Dieses Programm dient " +
+                "der Demonstration und dem Erlernen von Prinzipien der Programmierung mit Java. Eine Verwendung " +
+                "des Programms für andere Zwecke verletzt möglicherweise die Urheberrechte der Originalautoren der " +
+                "redaktionellen Inhalte und ist daher untersagt.";
+
+        TextArea textArea = new TextArea(content);
+        textArea.setEditable(false);
+        textArea.setWrapText(true);
+
+        textArea.setPrefWidth(500);
+        textArea.setPrefHeight(300);
+
+        alert.getDialogPane().setContent(textArea);
+
+        alert.showAndWait();
+    }
+
     private void startWikiBookFetchTask(String title) {
         lastUsernameValue.setText("Wird geladen...");
         lastChangeValue.setText("Wird geladen...");
@@ -441,6 +473,5 @@ public class WikiBooksController {
 
         updateCurrentZettelkastenMediaListView(_title);
     }
-
 
 }

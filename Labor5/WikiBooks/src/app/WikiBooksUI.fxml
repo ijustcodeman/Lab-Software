@@ -9,6 +9,11 @@
     <padding>
         <Insets bottom="10" left="20" right="20" top="10" />
     </padding>
+    <MenuBar>
+        <Menu text="?">
+            <MenuItem text="Über dieses Programm" onAction="#onAboutMenuAction"/>
+        </Menu>
+    </MenuBar>
     <GridPane hgap="5" vgap="10" alignment="TOP_LEFT">
 
         <columnConstraints>
