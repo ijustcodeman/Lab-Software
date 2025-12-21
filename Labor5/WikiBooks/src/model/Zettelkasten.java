@@ -238,9 +238,7 @@ public class Zettelkasten implements Iterable<Medium>, Serializable {
      * Die Methode behandelt Weiterleitungen (Redirects) durch wiederholte Abfragen
      * bis zum endgültigen Zielartikel.
      * @param _titel Der Titel des WikiBooks, der gesucht werden soll
-     * @return Das vollständig mit Metadaten gefüllte WikiBook Objekt bei Erfolg,
-     * oder null, wenn der Abruf oder das Parsen fehlschlägt
-     * @throws MyWebException Kann ausgelöst werden, wenn beim Prozess ein Fehler auftritt
+     * @return Das vollständig mit Metadaten gefüllte WikiBook Objekt bei Erfolg, oder null, wenn der Abruf oder das Parsen fehlschlägt
      */
     public WikiBook fetchWikiBook(String _titel) {
         String currentTitle = _titel;

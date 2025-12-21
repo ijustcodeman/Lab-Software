@@ -15,42 +15,132 @@ import model.*;
 import java.util.ArrayList;
 import java.util.Collections;
 
+/**
+ * Der Controller für die WikiBooks Anwendung.
+ * Diese Klasse verbindet die Benutzeroberfläche mit der Logik.
+ * Sie verwaltet die Suche nach WikiBooks, die Integration der Wikipedia API,
+ * die Historien Navigation sowie die Verwaltung des lokalen Zettelkastens.
+ * @author Max Gebert, 21513
+ */
 public class WikiBooksController {
 
+    /**
+     * Eingabefeld für den Titel des gesuchten WikiBooks.
+     */
     public TextField searchTitle;
 
+    /**
+     * Speichert den aktuell extrahierten Titel aus dem Suchfeld für die weitere Verarbeitung.
+     */
     public String extractedTitle = "";
 
+    /**
+     * Anzeige Komponente für die Webinhalte des gewählten WikiBooks.
+     */
     public WebView viewBook;
 
+    /**
+     * Label zur Anzeige des Benutzernamens oder der IP des letzten Bearbeiters.
+     */
     public Label lastUsernameValue;
+
+    /**
+     * Label zur Anzeige des Zeitpunkts der letzten Änderung am WikiBook.
+     */
     public Label lastChangeValue;
+
+    /**
+     * Label zur Anzeige der zugeordneten Regale also Kategorien des WikiBooks.
+     */
     public Label regalValue;
 
+    /**
+     * Liste zur Anzeige der Titel der im Zettelkasten gespeicherten Medien.
+     */
     public ListView<String> viewMedien = new ListView<>();
+
+    /**
+     * Liste zur Anzeige von gefundenen Synonymen oder verwandten Titeln aus Wikipedia.
+     */
     public ListView<String> viewSynonyme = new ListView<>();
 
+    /**
+     * Schaltfläche zum Starten einer gezielten Wikipedia Suche basierend auf der Auswahl.
+     */
     public Button searchWikipediaButton;
+
+    /**
+     * Schaltfläche zur Navigation zum vorherigen Eintrag in der Suchhistorie.
+     */
     public Button backButton;
+
+    /**
+     * Schaltfläche zur Navigation zum nächsten Eintrag in der Suchhistorie.
+     */
     public Button forwardButton;
 
+    /**
+     * ComboBox zur Anzeige und Auswahl der bisherigen Suchhistorie in umgekehrter Reihenfolge.
+     */
     public ComboBox<String> navigationComboBox = new ComboBox<>();
 
+    /**
+     * Der Wurzel Container des Layouts, wird primär für globale Eventfilter genutzt.
+     */
     public VBox rootContainer;
+
+    /**
+     * Die Menüleiste der Anwendung.
+     */
     public MenuBar mainMenuBar;
+
+    /**
+     * Schaltfläche zum Auslösen der Suche basierend auf dem aktuellen Text im Suchfeld.
+     */
     public Button searchButton;
+
+    /**
+     * Schaltfläche für den Export der Daten.
+     */
     public Button exportButton;
 
+    /**
+     * Das zentrale Datenmodell, dass die Liste aller Medien verwaltet.
+     */
     private Zettelkasten zettelkasten = new Zettelkasten();
 
+    /**
+     * Komponente für die binäre Serialisierung, um den Zettelkasten dauerhaft zu speichern.
+     */
     private BinaryPersistency binaryPersistency = new BinaryPersistency();
+
+    /**
+     * Standard Dateiname für das Speichern und Laden des Zettelkastens.
+     */
     private final String DEFAULT_FILENAME = "zettelkasten_data";
 
+    /**
+     * Der aktuelle Index innerhalb der Suchhistorie (savedTitles).
+     * Er dient der Steuerung der Vor und Zurück Navigation.
+     */
     private int currentIndex = -1;
+
+    /**
+     * Liste der erfolgreich gesuchten Titel zur Realisierung der Navigationshistorie.
+     */
     private ArrayList<String> savedTitles = new ArrayList<>();
 
+    /**
+     * Flag zur Vermeidung von Endlosschleifen bei automatischen Updates der ComboBox.
+     * Verhindert, dass ein programmatisches Setzen des Index ein neues Event auslöst.
+     */
     private boolean isInternalUpdate = false;
 
+    /**
+     * Initialisiert den Controller nach dem Laden der FXML Datei.
+     * Konfiguriert Event Handler für die Suche, Navigation und Listeninteraktionen.
+     * Beinhaltet die Logik für die Tabreihenfolge und globale Shortcuts.
+     */
     public void initialize() {
         searchTitle.setOnAction(this::onClickSearchTitle);
         WebEngine engine = viewBook.getEngine();
@@ -133,6 +223,10 @@ public class WikiBooksController {
         });
     }
 
+    /**
+     * Verarbeitet die Suche nach einem Buchtitel.
+     * @param actionEvent Das auslösende Ereignis
+     */
     public void onClickSearchTitle(ActionEvent actionEvent) {
         extractedTitle = searchTitle.getText().trim();
         if (extractedTitle.isEmpty()){
@@ -159,6 +253,10 @@ public class WikiBooksController {
 
     }
 
+    /**
+     * Versucht, das aktuell im Suchfeld stehende WikiBook permanent zum Zettelkasten hinzuzufügen.
+     * @param actionEvent Das auslösende Ereignis
+     */
     public void onClickAddWikiBook(ActionEvent actionEvent) {
         extractedTitle = searchTitle.getText().trim();
 
@@ -182,6 +280,10 @@ public class WikiBooksController {
 
     }
 
+    /**
+     * Wechselt die Sortierreihenfolge der Medienliste zwischen AUFSTEIGEND und ABSTEIGEND.
+     * @param actionEvent Das auslösende Ereignis
+     */
     public void onClickSortWikiBook(ActionEvent actionEvent) {
         int anzahlMedien = zettelkasten.getMyZettelkasten().size();
 
@@ -211,6 +313,10 @@ public class WikiBooksController {
         updateMediaListView();
     }
 
+    /**
+     * Entfernt das aktuell in der Medienliste markierte Element aus dem Zettelkasten.
+     * @param actionEvent Das auslösende Ereignis
+     */
     public void onClickDeleteWikiBook(ActionEvent actionEvent) {
         String selectedTitle = viewMedien.getSelectionModel().getSelectedItem();
 
@@ -236,6 +342,10 @@ public class WikiBooksController {
         }
     }
 
+    /**
+     * Speichert den aktuellen Zustand des Zettelkastens binär ab.
+     * @param actionEvent Das auslösende Ereignis
+     */
     public void onClickSave(ActionEvent actionEvent) {
 
         if (zettelkasten.getMyZettelkasten().isEmpty()){
@@ -263,6 +373,10 @@ public class WikiBooksController {
         }
     }
 
+    /**
+     * Lädt einen zuvor gespeicherten Zettelkasten aus einer binären Datei.
+     * @param actionEvent Das auslösende Ereignis
+     */
     public void onClickLoad(ActionEvent actionEvent) {
         Zettelkasten loadedZk = binaryPersistency.load(DEFAULT_FILENAME);
 
@@ -286,6 +400,10 @@ public class WikiBooksController {
         }
     }
 
+    /**
+     * Platzhalter Methode für den Import von Daten.
+     * @param actionEvent Das auslösende Ereignis
+     */
     public void onClickImport(ActionEvent actionEvent) {
 
         String errorText = "Die Importfunktion wird in dieser Version nicht unterstützt.";
@@ -299,6 +417,10 @@ public class WikiBooksController {
         throw new UnsupportedOperationException(errorText);
     }
 
+    /**
+     * Platzhalter Methode für den Export von Daten.
+     * @param actionEvent Das auslösende Ereignis
+     */
     public void onClickExport(ActionEvent actionEvent) {
 
         String errorText = "Die Exportfunktion wird in dieser Version nicht unterstützt.";
@@ -312,6 +434,10 @@ public class WikiBooksController {
         throw new UnsupportedOperationException(errorText);
     }
 
+    /**
+     * Navigiert in der Suchhistorie einen Schritt zurück.
+     * @param actionEvent Das auslösende Ereignis
+     */
     public void onClickBack(ActionEvent actionEvent) {
         if (currentIndex > 0) {
             currentIndex--;
@@ -323,6 +449,10 @@ public class WikiBooksController {
         }
     }
 
+    /**
+     * Navigiert in der Suchhistorie einen Schritt vor.
+     * @param actionEvent Das auslösende Ereignis
+     */
     public void onClickForward(ActionEvent actionEvent) {
         if (currentIndex < savedTitles.size() - 1) {
             currentIndex++;
@@ -334,6 +464,10 @@ public class WikiBooksController {
         }
     }
 
+    /**
+     * Reagiert auf Mausklicks in der Synonyme Liste.
+     * @param mouseEvent Das auslösende Mausereignis
+     */
     public void onSynonymListViewClicked(MouseEvent mouseEvent) {
         if (mouseEvent.getClickCount() == 2) {
             String selectedTitle = viewSynonyme.getSelectionModel().getSelectedItem();
@@ -344,6 +478,10 @@ public class WikiBooksController {
         }
     }
 
+    /**
+     * Startet eine Suche basierend auf dem in der Wikipedia Vorschlagsliste ausgewählten Eintrag.
+     * @param actionEvent Das auslösende Ereignis
+     */
     public void onClickSearchWikipedia(ActionEvent actionEvent) {
         String selectedTitle = viewSynonyme.getSelectionModel().getSelectedItem();
 
@@ -360,6 +498,10 @@ public class WikiBooksController {
         onClickSearchTitle(actionEvent);
     }
 
+    /**
+     * Ermöglicht das direkte Springen zu einem Titel aus der Historie.
+     * @param actionEvent Das auslösende Ereignis der ComboBox
+     */
     public void onNavigationChanged(ActionEvent actionEvent) {
         if (isInternalUpdate) return;
 
@@ -376,6 +518,10 @@ public class WikiBooksController {
         }
     }
 
+    /**
+     * Zeigt einen Informationsdialog ("Über dieses Programm") an.
+     * @param actionEvent Das auslösende Ereignis
+     */
     public void onAboutMenuAction(ActionEvent actionEvent) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Über dieses Programm");
@@ -408,7 +554,11 @@ public class WikiBooksController {
         alert.showAndWait();
     }
 
-    private void startWikiBookFetchTask(String title) {
+    /**
+     * Startet einen Hintergrund Thread, um Metadaten zu einem WikiBook abzurufen.
+     * @param _title Der Titel des abzurufenden WikiBooks
+     */
+    private void startWikiBookFetchTask(String _title) {
         lastUsernameValue.setText("Wird geladen...");
         lastChangeValue.setText("Wird geladen...");
         regalValue.setText("Wird geladen...");
@@ -417,10 +567,10 @@ public class WikiBooksController {
         Task<WikiBook> fetchTask = new Task<>() {
             @Override
             protected WikiBook call() throws Exception {
-                WikiBook book = zettelkasten.fetchWikiBook(title);
+                WikiBook book = zettelkasten.fetchWikiBook(_title);
 
                 if (book == null) {
-                    throw new Exception("Das WikiBook '" + title + "' konnte nicht abgerufen werden.");
+                    throw new Exception("Das WikiBook '" + _title + "' konnte nicht abgerufen werden.");
                 }
                 return book;
             }
@@ -450,8 +600,12 @@ public class WikiBooksController {
         new Thread(fetchTask).start();
     }
 
-    private void startWikipediaFetchTask(String searchKeyword) {
-        if (searchKeyword.trim().isEmpty()) {
+    /**
+     * Startet einen Hintergrund Thread, um passende Wikipedia Titel abzurufen.
+     * @param _searchKeyword Das Stichwort, nach dem in der Wikipedia API gesucht werden soll.
+     */
+    private void startWikipediaFetchTask(String _searchKeyword) {
+        if (_searchKeyword.trim().isEmpty()) {
             return;
         }
 
@@ -461,7 +615,7 @@ public class WikiBooksController {
         Task<ArrayList<String>> fetchTask = new Task<>() {
             @Override
             protected ArrayList<String> call() throws Exception {
-                return WikipediaAPI.fetchWikipediaTitles(searchKeyword);
+                return WikipediaAPI.fetchWikipediaTitles(_searchKeyword);
             }
         };
 
@@ -500,6 +654,10 @@ public class WikiBooksController {
         new Thread(fetchTask).start();
     }
 
+    /**
+     * Synchronisiert die Anzeige der Medienliste mit dem aktuellen Inhalt des Zettelkastens.
+     * Löscht alle bisherigen Einträge in viewMedien und fügt die aktuellen Titel neu hinzu.
+     */
     private void updateMediaListView() {
         viewMedien.getItems().clear();
         for (Medium medium : zettelkasten.getMyZettelkasten()) {
@@ -507,30 +665,41 @@ public class WikiBooksController {
         }
     }
 
-    private void updateUI(WikiBook book) {
-        if (book == null) {
+    /**
+     * Aktualisiert die Detail Labels (Bearbeiter, Datum, Regal) in der Benutzeroberfläche.
+     * @param _book Das WikiBook Objekt, dessen Daten angezeigt werden sollen, oder null
+     */
+    private void updateUI(WikiBook _book) {
+        if (_book == null) {
             lastUsernameValue.setText("N/A");
             lastChangeValue.setText("N/A");
             regalValue.setText("N/A");
             return;
         }
 
-        lastUsernameValue.setText(book.getDisplayContributor());
+        lastUsernameValue.setText(_book.getDisplayContributor());
 
-        lastChangeValue.setText(book.getFormattedLastModifiedDate());
+        lastChangeValue.setText(_book.getFormattedLastModifiedDate());
 
-        if (book.getRegale().isEmpty()) {
+        if (_book.getRegale().isEmpty()) {
             regalValue.setText("N/A");
         } else {
-            regalValue.setText(String.join(", ", book.getRegale()));
+            regalValue.setText(String.join(", ", _book.getRegale()));
         }
     }
 
+    /**
+     * Steuert die Aktivierung der Navigationsbuttons.
+     */
     private void updateNavigationButtons() {
         backButton.setDisable(currentIndex <= 0);
         forwardButton.setDisable(currentIndex >= savedTitles.size() - 1);
     }
 
+
+    /**
+     * Aktualisiert die Navigations ComboBox mit der aktuellen Historie.
+     */
     private void updateCombobox() {
         isInternalUpdate = true;
 
@@ -547,6 +716,9 @@ public class WikiBooksController {
         isInternalUpdate = false;
     }
 
+    /**
+     * Zeigt einen Standard Warndialog an, wenn versucht wird, eine Suche ohne Eingabe eines Titels zu starten.
+     */
     public void warningEmptyTitle(){
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("WARNUNG");
@@ -555,6 +727,10 @@ public class WikiBooksController {
         alert.showAndWait();
     }
 
+    /**
+     * Methode zum Laden aller Daten eines WikiBooks.
+     * @param _title Der rohe Titel des Buches, wie er vom Benutzer eingegeben oder aus einer Liste ausgewählt wurde
+     */
     public void loadAndFetchEverything(String _title){
         String safeTitle = WikiBook.getURLTitle(_title);
         WebEngine engine = viewBook.getEngine();
